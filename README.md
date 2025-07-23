@@ -33,6 +33,7 @@ No
 ### Dependencies
 
 - GTK 2.0
+- ALSA (Linux)
 
 ```
 sudo apt install libgtk2.0-dev
