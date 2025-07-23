@@ -24,11 +24,13 @@ This is suppose to be a blueprint for DAW developers. They can use this code fre
 
 ### Is there going to be rust support
 
-No
+No, not low-level enough. Many of the dependencies use C/C++ not rust. That and the fact is I'm not great at rust programmer so no... but you can rewrite this in rust if you're insane. I don't judge ;)
 
 ### Technology
 
 - **Languages**: C/C++
+- **GUI Toolkit**: GTK 2.0
+- 
 
 ### Dependencies
 
