@@ -39,5 +39,5 @@ MixerChannelInfo* CreateChannel(const char* name, uint32_t id)
     channel->solo = false;
     channel->volume = 0.0f; // Normalized db
     channel->numplugins = 0;
-
+    return channel;		// <-- added return function to avoid undefined behavior
 }
