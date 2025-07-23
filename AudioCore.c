@@ -43,6 +43,56 @@ int AudioCore_Init(const char* device, unsigned int samplerate)
     // TODO: Store 'handle' somewhere for later use
 #elif defined(_WIN32)
     // TODO: Create or make a AudioCore_Init functionality for cross-platform support for windows
+
+    // Initialize COM 
+    hr = CoInitialize(NULL);
+    if (FAILED(hr))
+    {
+        merror_win32(NULL, "AudioCore Error", "Failed to initialize COM: %Lx", hr);
+        return -1;
+    }
+
+    // Create the device enumerator
+    hr = CoCreateInstance(&CLSID_MMDeviceEnumerator,
+    NULL,
+    CLSCTX_INPROC_SERVER,
+    &IID_IMMDeviceEnumerator,
+    (void**)&deviceEnumerator 
+    );
+
+    if (FAILED(hr))
+    {
+        merror_win32(NULL, "AudioCore Error", "Failed to create device enumerator: %Lx", hr);
+        CoUninitialize();
+        return -2;
+    }
+
+    // Get the default audio endpoint
+    hr = deviceEnumerator->lpVtbl->GetDefaultAudioEndpoint(
+        deviceEnumerator,
+        eRender, 
+        eConsole,
+        &audiodev
+    );
+
+    if (FAILED(hr))
+    {
+        merror_win32(NULL, "AudioCore Error", "Failed to get default audio endpoint: %Lx", hr);
+        deviceEnumerator->lpVtbl->Release(deviceEnumerator);
+        CoUninitialize();
+        return -3;
+    }
+#endif
+    return 0;
+}
+
+int AudioCore_Cleanup(void)
+{
+#if defined(__linux__)
+    // TODO: Implement cleanup for linux audio device
+#elif defined(_WIN32)
+    audiodev->lpVtbl->Release(audiodev);
+    deviceEnumerator->lpVtbl->Release(deviceEnumerator);
 #endif
     return 0;
 }

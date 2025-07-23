@@ -26,7 +26,9 @@
 
 #elif defined(_WIN32)
 #include <windows.h>
-#include <io.h>
+#include <mmdeviceapi.h>
+#include <audioclient.h>
+#include <functiondiscoverykeys_devpkey.h>
     #ifndef sleep
     #define sleep(x) Sleep(1000 * (x))
     #endif 
@@ -90,7 +92,20 @@ typedef struct MixerChannelInfo
 extern "C" {
 #endif
 
+// -- AudioCore API platform specific variables --
+
+#if defined(__linux__)
+
+#elif defined(_WIN32)
+    HRESULT hr;
+    IMMDeviceEnumerator* deviceEnumerator = NULL;
+    IMMDevice* audiodev = NULL;
+#endif
+
+// -- AudioCore API function declarations --
+
 int AudioCore_Init(const char* device, unsigned int samplerate);
+int AudioCore_Cleanup(void);
 
 MixerChannelInfo* CreateChannel(const char* name, uint32_t id);
     

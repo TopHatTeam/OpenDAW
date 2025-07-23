@@ -1,7 +1,11 @@
 {
     "files.associations": {
+        ".fantomasignore": "ignore",
+        ".uc": "unrealscript",
+        "*.C": "c",
         "gtk.h": "c",
         "gtkaboutdialog.h": "c",
-        "gdk.h": "c"
+        "gdk.h": "c",
+        "audioclient.h": "c"
     }
 }
