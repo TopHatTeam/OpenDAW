@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "gtk.h": "c",
+        "gtkaboutdialog.h": "c",
+        "gdk.h": "c"
+    }
+}

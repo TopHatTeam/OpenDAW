@@ -9,7 +9,7 @@
 //
 // ---------------------------------------------------------
 
-#include <gtk-2.0/gtk/gtk.h>
+#include <gtk/gtk.h>
 
 #ifndef AUDIOERROR_H
 #define AUDIOERROR_H
