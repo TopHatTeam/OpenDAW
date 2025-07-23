@@ -29,3 +29,10 @@ No
 ### Technology
 
 - **Languages**: C/C++
+
+### Dependencies
+
+- GTK 2.0
+
+```
+sudo apt install libgtk2.0-dev
