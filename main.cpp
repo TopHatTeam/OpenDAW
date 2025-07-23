@@ -9,8 +9,8 @@
 //
 // ---------------------------------------------------------
 
-#include <headers/AudioCore.h>
-#include <headers/AudioError.h>
+#include "headers/AudioCore.h"
+#include "headers/AudioError.h"
 
 int main()
 {
