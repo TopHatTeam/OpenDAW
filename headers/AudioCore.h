@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <math.h>
 
 #if defined(__linux__)
 #include <alsa/control.h>
@@ -88,6 +89,14 @@ typedef struct MixerChannelInfo
     char*       channelname;      // The channel's name
 } MixerChannelInfo;
 
+typedef struct wave_t
+{
+    float frequency;    // Frequency of the wave in Hz
+    float amplitude;    // Amplitude of the wave
+    float phase;        // Phase of the wave in radians
+    float samplerate;   // Sample rate of the wave in Hz
+} wave_t;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -98,15 +107,28 @@ extern "C" {
 
 #elif defined(_WIN32)
     HRESULT hr;
-    IMMDeviceEnumerator* deviceEnumerator = NULL;
-    IMMDevice* audiodev = NULL;
+    IMMDeviceEnumerator* deviceEnumerator = NULL;   // <-- basic safety make sure this is NULL or undefined behaviors are bound to occur
+    IMMDevice* audiodev = NULL;                     // <-- basic safety make sure this is NULL or undefined behaviors are bound to occur
 #endif
 
 // -- AudioCore API function declarations --
 
 int AudioCore_Init(const char* device, unsigned int samplerate);
+
+/*
+*@brief Cleans up the AudioCore resources.
+*@note This function supports both Linux and Windows platforms.
+*@returns void
+*/
 int AudioCore_Cleanup(void);
 
+/*
+*@brief Creates a new mixer channel with the specified name and ID.
+*@param name The name of the channel.
+*@param id The ID of the channel.
+*@returns A pointer to the newly created mixer channel
+*@note For more information on MixerChannelInfo, see 'AudioCore.h'
+*/
 MixerChannelInfo* CreateChannel(const char* name, uint32_t id);
     
 #ifdef __cplusplus

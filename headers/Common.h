@@ -24,6 +24,10 @@
     #endif 
 #endif
 
+// Heard this has something to do with the audio waves
+#define PI 3.14159265358979323846f
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
