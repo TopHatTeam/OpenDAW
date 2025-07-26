@@ -25,14 +25,17 @@
 #endif
 
 // Heard this has something to do with the audio waves
-#define PI 3.14159265358979323846f
-
+#define PI      3.14159265358979323846
+#define PI_F    3.14159265358979323846f // <-- legacy support
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 static inline char* cstrdup(const char* x);
+
+static inline double csin(double x);
+static inline float csinf(float x);
 
 #ifdef __cplusplus
 }
