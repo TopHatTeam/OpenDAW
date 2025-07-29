@@ -6,6 +6,10 @@
         "gtk.h": "c",
         "gtkaboutdialog.h": "c",
         "gdk.h": "c",
-        "audioclient.h": "c"
+        "audioclient.h": "c",
+        "charconv": "c",
+        "chrono": "c",
+        "optional": "c",
+        "xlocnum": "c"
     }
 }

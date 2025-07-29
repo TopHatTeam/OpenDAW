@@ -25,8 +25,12 @@
 #endif
 
 // Heard this has something to do with the audio waves
+#if defined(__clang__)
 #define PI      3.14159265358979323846
-#define PI_F    3.14159265358979323846f // <-- legacy support
+
+#elif defined(__STDC_IEC_559__) && !defined(__STDC_IEC_559_DOUBLE__)
+#define PI    3.14159265358979323846f // <-- legacy support
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,7 +38,18 @@ extern "C" {
 
 static inline char* cstrdup(const char* x);
 
+/** 
+*@brief Optimized sine function for double values.
+*@param x The angle in radians.
+*@returns The sine of the angle.
+*/
 static inline double csin(double x);
+
+/** 
+*@brief Optimized sine function for float values.
+*@param x The angle in radians.
+*@returns The sine of the angle.
+*/
 static inline float csinf(float x);
 
 #ifdef __cplusplus

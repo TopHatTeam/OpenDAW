@@ -28,7 +28,7 @@ void merror(GtkWindow* parent, const char* msg);
 
 #if defined(_WIN32)
 
-/*
+/**
 *@brief Displays an error message for the Windows platform.
 *@param hwnd The handle to the parent window.
 *@param title The title of the error message box.

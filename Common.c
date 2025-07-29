@@ -44,7 +44,7 @@ static inline float csinf(float x)
     float x3 = x2 * x;
     float x4 = x3 * x;
     float x5 = x4 * x;
-    float x6 = x5 * x;
+    float x6 = x5 * x;  
     float x7 = x6 * x;
     float x8 = x7 * x;
     float x9 = x8 * x;
