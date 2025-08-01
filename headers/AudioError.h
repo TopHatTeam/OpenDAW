@@ -9,7 +9,7 @@
 //
 // ---------------------------------------------------------
 
-#include <gtk/gtk.h>    // Upgrading to GTK 4.0
+#include <gtk-4.0/gtk/gtk.h>   // Upgrading to GTK 4.0
 #include <stdio.h>      // for vsnprintf, fprintf, printf
 #include <stdarg.h>     // for va_list, va_start, va_end
 

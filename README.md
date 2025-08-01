@@ -29,13 +29,31 @@ No, not low-level enough. Many of the dependencies use C/C++ not rust. That and 
 ### Technology
 
 - **Languages**: C/C++
-- **GUI Toolkit**: GTK 2.0
+- **GUI Toolkit**: GTK 4.0
 - **Audio Backend (Linux)**: ALSA
 
 ### Dependencies
 
-- GTK 2.0
+- GTK 4.0 (upgraded from 2.0) 
 - ALSA (Linux)
 
+
+### Ubuntu / Debian packages
 ```
-sudo apt install libgtk2.0-dev
+sudo apt install libgtk4-dev
+```
+
+### Fedora / RedHat packages
+```
+sudo dnf install gtk4-devel
+```
+
+### Arch packages
+```
+sudo pacman -S gtk4
+```
+
+### MSYS2
+```
+pacman -S mingw-w64-x86_64-gtk4
+```

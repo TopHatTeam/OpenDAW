@@ -37,17 +37,29 @@
 
 // Check if compiler supports IEC 559 (IEEE 754) floating-point arithmetic
 #if defined(__clang__)
-    typedef double freq_t;
+    typedef double freq_t;      // Frequency in Hz
+    typedef double volume_t;    // Volume in range [0.0 to 1.0]
+    typedef double pan_t;       // Pan position in range [-10.0 to 10.0]
+    typedef double length_t;    // Length of the note in seconds
+    typedef double pitch_t;     // Pitch in semitones
     #define FREQ(x) x
     #pragma message("Using double precision: for musical notes frequencies")
 
 #elif defined(__STDC_IEC_559__) && !defined(__STDC_IEC_559_DOUBLE__)
-    typedef float freq_t;
+    typedef float freq_t;      // Frequency in Hz
+    typedef float volume_t;    // Volume in range [0.0 to 1.0]
+    typedef float pan_t;       // Pan position in range [-10.0 to 10.0]
+    typedef float length_t;    // Length of the note in seconds
+    typedef float pitch_t;     // Pitch in semitones
     #define FREQ(x) x##f
     #pragma message("Using float precision: for musical notes frequencies")
 
 #else 
-    typedef float freq_t;
+    typedef float freq_t;      // Frequency in Hz
+    typedef float volume_t;    // Volume in range [0.0 to 1.0]
+    typedef float pan_t;       // Pan position in range [-10.0 to 10.0]
+    typedef float length_t;    // Length of the note in seconds
+    typedef float pitch_t;     // Pitch in semitones
     #define FREQ(x) x##f
     #pragma message("Assuming no double support, falling back to float precision")
 #endif
@@ -358,7 +370,7 @@ const freq_t MusicNote[] =
     [N_B0]      = B0,
     [N_Bb0]     = Bb0,
     [N_A0]      = A0,
-}
+} ;
 
 typedef struct PlaybackInfo
 {
@@ -366,7 +378,7 @@ typedef struct PlaybackInfo
     uint32_t        bitdepth;      // The bit depth of the playback (e.g 8-bit, 16-bit, 32-bit)
     uint64_t        currentpos;    // Current position of the playhead for playback in samples
     uint32_t        channels;      // How many channels for playback (e.g mono, stereo or surround)
-    PlaybackState   status;        // What's the current status of 
+    PlaybackState   status;        // What's the current status of playback
 } PlaybackInfo;
 
 typedef struct MixerChannelInfo
@@ -402,6 +414,12 @@ typedef struct wave_t
     float samplerate;   // Sample rate of the wave in Hz
 } wave_t;
 
+
+typedef struct 
+{
+    
+} noteinfo_t;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -435,6 +453,8 @@ int AudioCore_Cleanup(void);
 *@note For more information on MixerChannelInfo, see 'AudioCore.h'
 */
 MixerChannelInfo* CreateChannel(const char* name, uint32_t id);
+
+InstrumentInfo* CreateInstrument(const char* name, uint32_t id);
     
 #ifdef __cplusplus
 }

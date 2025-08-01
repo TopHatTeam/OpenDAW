@@ -110,3 +110,8 @@ MixerChannelInfo* CreateChannel(const char* name, uint32_t id)
     channel->numplugins = 0;
     return channel;		// <-- added return function to avoid undefined behavior
 }
+
+InstrumentInfo* CreateInstrument(const char* name, uint32_t id)
+{
+    
+}
