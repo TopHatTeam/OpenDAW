@@ -13,6 +13,14 @@
 #include "headers/AudioError.h"
 #include "headers/Common.h"
 
+#if defined(__linux__)
+
+#elif defined(_WIN32)
+    HRESULT hr = S_OK;
+    IMMDeviceEnumerator* deviceEnumerator = NULL;
+    IMMDevice* audiodev = NULL;
+#endif
+
 int AudioCore_Init(const char* device, unsigned int samplerate)
 {
 #if defined(__linux__)

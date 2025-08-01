@@ -11,6 +11,8 @@
 
 #include "headers/AudioError.h"
 
+#if defined(__linux__)
+
 void merror(GtkWindow* parent, const char* msg)
 {
     GtkWidget* dialog = gtk_message_dialog_new(
@@ -24,11 +26,11 @@ void merror(GtkWindow* parent, const char* msg)
     gtk_widget_destroy(dialog);
 }
 
-#if defined(_WIN32)
+#elif defined(_WIN32)
 
 void merror_win32(HWND hwnd, const char* title, const char* msg, ...)
 {
-    char msg[1024]; // <-- Temporary buffer to hold the formatted message
+    char buffer[1024]; // <-- Temporary buffer to hold the formatted message
 
     va_list args;                                   // <-- Declare a variable to hold the variable arguments
     va_start(args, msg);                            // <-- Initialize 'args' to point to the first argument after 'msg'

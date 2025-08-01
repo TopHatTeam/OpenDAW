@@ -9,9 +9,9 @@
 //
 // ---------------------------------------------------------
 
-#include <headers/Common.h>
+#include "headers/Common.h"
 
-static inline char* cstrdup(const char* x)
+char* cstrdup(const char* x)
 {
     char* copy = malloc(strlen(x) + 1);
     if (copy)
@@ -21,7 +21,7 @@ static inline char* cstrdup(const char* x)
     return copy;
 }
 
-static inline double csin(double x)
+double csin(double x)
 {
     // Let's opmtimize the sin function 
     double x2 = x * x; 
@@ -37,7 +37,7 @@ static inline double csin(double x)
     return x - (x3 / 6.0) + (x5 / 120.0) - (x7 / 5040.0) + (x9 / 362880.0);
 } 
 
-static inline float csinf(float x)
+float csinf(float x)
 {
     // Oooooo, let's optimize this bad boy!
     float x2 = x * x;

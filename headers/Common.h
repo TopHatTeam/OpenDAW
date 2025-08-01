@@ -36,21 +36,21 @@
 extern "C" {
 #endif
 
-static inline char* cstrdup(const char* x);
+char* cstrdup(const char* x);
 
 /** 
 *@brief Optimized sine function for double values.
 *@param x The angle in radians.
 *@returns The sine of the angle.
 */
-static inline double csin(double x);
+double csin(double x);
 
 /** 
 *@brief Optimized sine function for float values.
 *@param x The angle in radians.
 *@returns The sine of the angle.
 */
-static inline float csinf(float x);
+float csinf(float x);
 
 #ifdef __cplusplus
 }

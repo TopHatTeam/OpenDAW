@@ -27,6 +27,7 @@
 
 #elif defined(_WIN32)
 #include <windows.h>
+#include <initguid.h>
 #include <mmdeviceapi.h>
 #include <audioclient.h>
 #include <functiondiscoverykeys_devpkey.h>
@@ -429,9 +430,9 @@ extern "C" {
 #if defined(__linux__)
 
 #elif defined(_WIN32)
-    HRESULT hr;
-    IMMDeviceEnumerator* deviceEnumerator = NULL;   // <-- basic safety make sure this is NULL or undefined behaviors are bound to occur
-    IMMDevice* audiodev = NULL;                     // <-- basic safety make sure this is NULL or undefined behaviors are bound to occur
+    extern HRESULT hr;
+    extern IMMDeviceEnumerator* deviceEnumerator;
+    extern IMMDevice* audiodev;
 #endif
 
 // -- AudioCore API function declarations --

@@ -19,19 +19,17 @@ static void windestroy(GtkWindow* window, gpointer data)
 {
     // Set the winclose flag to TRUE when the window is destroyed
     winclose = TRUE;
-    DAWUI::cleanup();
 }
 
 int main(int argc, char *argv[])
 {
 #if defined(__linux__)
-    DAWUI dui;
     
 #elif defined(_WIN32)
     // initalize the GTK window
-    DAWUI dui;
     GtkWindow* window = NULL;
-    DAWUI::init(1280, 720, "OpenDAW", argc, argv, &window);
+    GtkWidget* widget = NULL;
+    DAWUI::init(1280, 720, "OpenDAW", widget, window);
 
     // Initialize the AudioCore
     if (AudioCore_Init("default", 44100) < 0)
@@ -46,10 +44,7 @@ int main(int argc, char *argv[])
     // Manual loop for GTK
     while (!winclose)
     {
-        while (gtk_events_pending())
-        {
-            gtk_main_iteration();
-        }
+        while (g_main_context_iteration(NULL, FALSE));
 
 
     }

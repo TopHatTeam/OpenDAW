@@ -24,9 +24,11 @@
 extern "C" {
 #endif
 
+#if defined(__linux__)
+
 void merror(GtkWindow* parent, const char* msg);
 
-#if defined(_WIN32)
+#elif defined(_WIN32)
 
 /**
 *@brief Displays an error message for the Windows platform.

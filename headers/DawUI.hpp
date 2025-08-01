@@ -36,13 +36,13 @@ namespace DAWUI
      *@param width The width of the Daw UI window.
      *@param height The height of the Daw UI window.
      *@param title The title of the Daw UI window.
+     *@param widget A pointer to a GtkWidget that will be used for the Daw UI
+     *@param window A pointer to a GtkWindow that will be used for the Daw UI
      *@returns 0 on success, or a negative error code on failure.
      */
-    int init(int width, int height, const char* title, int argc, char *argv[], GtkWindow* window);
+    int init(int width, int height, const char* title, GtkWidget* widget, GtkWindow* window);
 
     int createlayout(GtkWindow* window);
-
-    int cleanup(void);
 
     int openmidi();
 }
