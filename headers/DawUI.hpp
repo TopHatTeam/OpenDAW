@@ -40,7 +40,7 @@ namespace DAWUI
      *@param window A pointer to a GtkWindow that will be used for the Daw UI
      *@returns 0 on success, or a negative error code on failure.
      */
-    int init(int width, int height, const char* title, GtkWidget* widget, GtkWindow* window);
+    int init(int width, int height, const char* title, GtkWidget** widget, GtkWindow** window, GtkApplication** app);
 
     int createlayout(GtkWindow* window);
 
