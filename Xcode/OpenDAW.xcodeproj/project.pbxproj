@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B82B9AA22E4FA3B100AAE6A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B82B9AA12E4FA3B100AAE6A4 /* Assets.xcassets */; };
+		B82B9AA52E4FA3B100AAE6A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B82B9AA42E4FA3B100AAE6A4 /* Preview Assets.xcassets */; };
+		B82B9AC92E4FA42000AAE6A4 /* audiocore.m in Sources */ = {isa = PBXBuildFile; fileRef = B82B9AC82E4FA42000AAE6A4 /* audiocore.m */; };
+		B82B9ACC2E4FBBBE00AAE6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B82B9ACB2E4FBBBE00AAE6A4 /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B82B9AAC2E4FA3B200AAE6A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B82B9A922E4FA3A400AAE6A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B82B9A992E4FA3A500AAE6A4;
+			remoteInfo = OpenDAW;
+		};
+		B82B9AB62E4FA3B200AAE6A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B82B9A922E4FA3A400AAE6A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B82B9A992E4FA3A500AAE6A4;
+			remoteInfo = OpenDAW;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B82B9A9A2E4FA3A500AAE6A4 /* OpenDAW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenDAW.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B82B9AA12E4FA3B100AAE6A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B82B9AA42E4FA3B100AAE6A4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B82B9AA62E4FA3B100AAE6A4 /* OpenDAW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenDAW.entitlements; sourceTree = "<group>"; };
+		B82B9AAB2E4FA3B100AAE6A4 /* OpenDAWTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenDAWTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B82B9AB52E4FA3B200AAE6A4 /* OpenDAWUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenDAWUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B82B9AC82E4FA42000AAE6A4 /* audiocore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = audiocore.m; sourceTree = "<group>"; };
+		B82B9ACA2E4FA44D00AAE6A4 /* audiocore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audiocore.h; sourceTree = "<group>"; };
+		B82B9ACB2E4FBBBE00AAE6A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B82B9A972E4FA3A500AAE6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B82B9AA82E4FA3B100AAE6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B82B9AB22E4FA3B200AAE6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B82B9A912E4FA3A400AAE6A4 = {
+			isa = PBXGroup;
+			children = (
+				B82B9A9C2E4FA3A500AAE6A4 /* OpenDAW */,
+				B82B9A9B2E4FA3A500AAE6A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B82B9A9B2E4FA3A500AAE6A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B82B9A9A2E4FA3A500AAE6A4 /* OpenDAW.app */,
+				B82B9AAB2E4FA3B100AAE6A4 /* OpenDAWTests.xctest */,
+				B82B9AB52E4FA3B200AAE6A4 /* OpenDAWUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B82B9A9C2E4FA3A500AAE6A4 /* OpenDAW */ = {
+			isa = PBXGroup;
+			children = (
+				B82B9AA12E4FA3B100AAE6A4 /* Assets.xcassets */,
+				B82B9AA62E4FA3B100AAE6A4 /* OpenDAW.entitlements */,
+				B82B9AA32E4FA3B100AAE6A4 /* Preview Content */,
+				B82B9AC82E4FA42000AAE6A4 /* audiocore.m */,
+				B82B9ACB2E4FBBBE00AAE6A4 /* main.m */,
+				B82B9ACA2E4FA44D00AAE6A4 /* audiocore.h */,
+			);
+			path = OpenDAW;
+			sourceTree = "<group>";
+		};
+		B82B9AA32E4FA3B100AAE6A4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B82B9AA42E4FA3B100AAE6A4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B82B9A992E4FA3A500AAE6A4 /* OpenDAW */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B82B9ABF2E4FA3B200AAE6A4 /* Build configuration list for PBXNativeTarget "OpenDAW" */;
+			buildPhases = (
+				B82B9A962E4FA3A500AAE6A4 /* Sources */,
+				B82B9A972E4FA3A500AAE6A4 /* Frameworks */,
+				B82B9A982E4FA3A500AAE6A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenDAW;
+			productName = OpenDAW;
+			productReference = B82B9A9A2E4FA3A500AAE6A4 /* OpenDAW.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B82B9AAA2E4FA3B100AAE6A4 /* OpenDAWTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B82B9AC22E4FA3B200AAE6A4 /* Build configuration list for PBXNativeTarget "OpenDAWTests" */;
+			buildPhases = (
+				B82B9AA72E4FA3B100AAE6A4 /* Sources */,
+				B82B9AA82E4FA3B100AAE6A4 /* Frameworks */,
+				B82B9AA92E4FA3B100AAE6A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B82B9AAD2E4FA3B200AAE6A4 /* PBXTargetDependency */,
+			);
+			name = OpenDAWTests;
+			productName = OpenDAWTests;
+			productReference = B82B9AAB2E4FA3B100AAE6A4 /* OpenDAWTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B82B9AB42E4FA3B200AAE6A4 /* OpenDAWUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B82B9AC52E4FA3B200AAE6A4 /* Build configuration list for PBXNativeTarget "OpenDAWUITests" */;
+			buildPhases = (
+				B82B9AB12E4FA3B200AAE6A4 /* Sources */,
+				B82B9AB22E4FA3B200AAE6A4 /* Frameworks */,
+				B82B9AB32E4FA3B200AAE6A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B82B9AB72E4FA3B200AAE6A4 /* PBXTargetDependency */,
+			);
+			name = OpenDAWUITests;
+			productName = OpenDAWUITests;
+			productReference = B82B9AB52E4FA3B200AAE6A4 /* OpenDAWUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B82B9A922E4FA3A400AAE6A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					B82B9A992E4FA3A500AAE6A4 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					B82B9AAA2E4FA3B100AAE6A4 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = B82B9A992E4FA3A500AAE6A4;
+					};
+					B82B9AB42E4FA3B200AAE6A4 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = B82B9A992E4FA3A500AAE6A4;
+					};
+				};
+			};
+			buildConfigurationList = B82B9A952E4FA3A400AAE6A4 /* Build configuration list for PBXProject "OpenDAW" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B82B9A912E4FA3A400AAE6A4;
+			productRefGroup = B82B9A9B2E4FA3A500AAE6A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B82B9A992E4FA3A500AAE6A4 /* OpenDAW */,
+				B82B9AAA2E4FA3B100AAE6A4 /* OpenDAWTests */,
+				B82B9AB42E4FA3B200AAE6A4 /* OpenDAWUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B82B9A982E4FA3A500AAE6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B82B9AA52E4FA3B100AAE6A4 /* Preview Assets.xcassets in Resources */,
+				B82B9AA22E4FA3B100AAE6A4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B82B9AA92E4FA3B100AAE6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B82B9AB32E4FA3B200AAE6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B82B9A962E4FA3A500AAE6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B82B9ACC2E4FBBBE00AAE6A4 /* main.m in Sources */,
+				B82B9AC92E4FA42000AAE6A4 /* audiocore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B82B9AA72E4FA3B100AAE6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B82B9AB12E4FA3B200AAE6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B82B9AAD2E4FA3B200AAE6A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B82B9A992E4FA3A500AAE6A4 /* OpenDAW */;
+			targetProxy = B82B9AAC2E4FA3B200AAE6A4 /* PBXContainerItemProxy */;
+		};
+		B82B9AB72E4FA3B200AAE6A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B82B9A992E4FA3A500AAE6A4 /* OpenDAW */;
+			targetProxy = B82B9AB62E4FA3B200AAE6A4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B82B9ABD2E4FA3B200AAE6A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B82B9ABE2E4FA3B200AAE6A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		B82B9AC02E4FA3B200AAE6A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OpenDAW/OpenDAW.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OpenDAW/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewskatzes.OpenDAW;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B82B9AC12E4FA3B200AAE6A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OpenDAW/OpenDAW.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OpenDAW/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewskatzes.OpenDAW;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B82B9AC32E4FA3B200AAE6A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewskatzes.OpenDAWTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenDAW.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenDAW";
+			};
+			name = Debug;
+		};
+		B82B9AC42E4FA3B200AAE6A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewskatzes.OpenDAWTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenDAW.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenDAW";
+			};
+			name = Release;
+		};
+		B82B9AC62E4FA3B200AAE6A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewskatzes.OpenDAWUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = OpenDAW;
+			};
+			name = Debug;
+		};
+		B82B9AC72E4FA3B200AAE6A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewskatzes.OpenDAWUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = OpenDAW;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B82B9A952E4FA3A400AAE6A4 /* Build configuration list for PBXProject "OpenDAW" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B82B9ABD2E4FA3B200AAE6A4 /* Debug */,
+				B82B9ABE2E4FA3B200AAE6A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B82B9ABF2E4FA3B200AAE6A4 /* Build configuration list for PBXNativeTarget "OpenDAW" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B82B9AC02E4FA3B200AAE6A4 /* Debug */,
+				B82B9AC12E4FA3B200AAE6A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B82B9AC22E4FA3B200AAE6A4 /* Build configuration list for PBXNativeTarget "OpenDAWTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B82B9AC32E4FA3B200AAE6A4 /* Debug */,
+				B82B9AC42E4FA3B200AAE6A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B82B9AC52E4FA3B200AAE6A4 /* Build configuration list for PBXNativeTarget "OpenDAWUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B82B9AC62E4FA3B200AAE6A4 /* Debug */,
+				B82B9AC72E4FA3B200AAE6A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B82B9A922E4FA3A400AAE6A4 /* Project object */;
+}
