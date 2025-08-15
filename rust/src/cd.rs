@@ -84,6 +84,8 @@ pub unsafe extern "C" fn burn_cd(
         Err(_) => return -2,
     };
 
+    // We need to implement CD Burning here
+
     println!("Burning {} bytes to device: {}", size, path_str);
 
     0
