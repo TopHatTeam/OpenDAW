@@ -17,3 +17,8 @@ void DAWUI::init(const char* title, int width, int height, QWidget &window)
     window.setWindowTitle(title);
     window.show();
 }
+
+void DAWUI::createui(QMainWindow* window)
+{
+    /*TODO: Implement the UI*/
+}

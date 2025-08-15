@@ -29,9 +29,37 @@
 
 #include <QApplication>
 #include <QWidget>
+#include <QVariant>
+#include <QAction>
+#include <QCheckBox>
+#include <QDial>
+#include <QFrame>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSlider>
+#include <QStatusBar>
+#include <QVBoxLayout>
 
 namespace DAWUI
 {
+
+    // -- DawUI Objects --
+
+    QMenuBar*   menubar;
+    QMenu*      menuFile;
+    QMenu*      menuEdit;
+    QAction*    actionNew_Project;
+    QAction*    actionOpen_Project;
+    QAction*    actionSave_Project;
+    QAction*    actionCopy;
+    QAction*    actionPaste;
+    QAction*    actionDelete;
+
     // -- DawUI API function declarations --
     
     /**
@@ -44,7 +72,7 @@ namespace DAWUI
      */
     void init(const char* title, int width, int height, QWidget &window);
 
-    void createui();
+    void createui(QMainWindow* window);
 }
 
 #endif 
