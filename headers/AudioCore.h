@@ -179,6 +179,7 @@ The Red Book standard defines the audio format for CDs, which are the following:
 #define MIDI_PROGRAM_CHANGE     0xC0
 #define MIDI_PITCH_BEND         0xE0
 
+
 typedef int16_t cd_sample_t; // signed 16-bit PCM
 
 typedef struct cd_pcm_frame_t

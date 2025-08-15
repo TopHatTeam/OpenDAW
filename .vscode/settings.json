@@ -38,6 +38,7 @@
         "xmemory": "c",
         "xstring": "c",
         "xtree": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "terminal.integrated.shell.windows": "C:\\msys64\\mingw64.exe"
     }
 }
