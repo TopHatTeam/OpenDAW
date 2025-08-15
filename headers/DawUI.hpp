@@ -27,6 +27,9 @@
 #include "AudioCore.h"
 #include "AudioError.h"
 
+#include <QApplication>
+#include <QWidget>
+
 namespace DAWUI
 {
     // -- DawUI API function declarations --
@@ -36,15 +39,12 @@ namespace DAWUI
      *@param width The width of the Daw UI window.
      *@param height The height of the Daw UI window.
      *@param title The title of the Daw UI window.
-     *@param widget A pointer to a GtkWidget that will be used for the Daw UI
-     *@param window A pointer to a GtkWindow that will be used for the Daw UI
-     *@returns 0 on success, or a negative error code on failure.
+     *@param window A reference to a QWidget that will be used for the Main Daw window
+     *@returns void
      */
-    int init(int width, int height, const char* title, GtkWidget** widget, GtkWindow** window, GtkApplication** app);
+    void init(const char* title, int width, int height, QWidget &window);
 
-    int createlayout(GtkWindow* window);
-
-    int openmidi();
+    void createui();
 }
 
 #endif 

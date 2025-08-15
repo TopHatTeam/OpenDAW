@@ -14,7 +14,7 @@
 #include "headers/Common.h"
 
 #if defined(__linux__)
-
+    snd_pcm_t* handle;
 #elif defined(_WIN32)
     HRESULT hr = S_OK;
     IMMDeviceEnumerator* deviceEnumerator = NULL;
@@ -24,7 +24,6 @@
 int AudioCore_Init(const char* device, unsigned int samplerate)
 {
 #if defined(__linux__)
-    snd_pcm_t* handle;
     int err = snd_pcm_open(&handle, device, SND_PCM_STREAM_PLAYBACK, 0);
     if (err < 0)
     {   
@@ -38,7 +37,7 @@ int AudioCore_Init(const char* device, unsigned int samplerate)
     snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
     snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE);
     snd_pcm_hw_params_set_channels(handle, params, 2); // stereo setup
-    snd_pcm_hw_params_set_rate_near(handle, params, &sampelrate, 0);
+    snd_pcm_hw_params_set_rate_near(handle, params, &samplerate, 0);
     
     err = snd_pcm_hw_params(handle, params);
     if (err < 0)
@@ -97,7 +96,12 @@ int AudioCore_Init(const char* device, unsigned int samplerate)
 int AudioCore_Cleanup(void)
 {
 #if defined(__linux__)
-    // TODO: Implement cleanup for linux audio device
+    if (handle)
+    {
+        snd_pcm_drain(handle);
+        snd_pcm_close(handle);
+        handle = null;
+    }
 #elif defined(_WIN32)
     audiodev->lpVtbl->Release(audiodev);
     deviceEnumerator->lpVtbl->Release(deviceEnumerator);

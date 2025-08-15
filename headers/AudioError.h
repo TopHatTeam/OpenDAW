@@ -9,16 +9,15 @@
 //
 // ---------------------------------------------------------
 
-#include <gtk-4.0/gtk/gtk.h>   // Upgrading to GTK 4.0
+#ifndef AUDIOERROR_H
+#define AUDIOERROR_H
+
 #include <stdio.h>      // for vsnprintf, fprintf, printf
 #include <stdarg.h>     // for va_list, va_start, va_end
 
 #if defined(_WIN32)
-#include <windows.h>    // for HWND, MessageBox
+    #include <windows.h>    // for HWND, MessageBox
 #endif
-
-#ifndef AUDIOERROR_H
-#define AUDIOERROR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,7 +25,6 @@ extern "C" {
 
 #if defined(__linux__)
 
-void merror(GtkWindow* parent, const char* msg);
 
 #elif defined(_WIN32)
 
@@ -40,6 +38,10 @@ void merror(GtkWindow* parent, const char* msg);
 *@returns void
 */
 void merror_win32(HWND hwnd, const char* title, const char* msg, ...);
+
+#elif defined(__apple__)
+
+
 
 #endif
     
