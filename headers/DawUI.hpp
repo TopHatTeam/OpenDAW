@@ -27,6 +27,8 @@
 #include "AudioCore.h"
 #include "AudioError.h"
 
+#include <vector>
+
 #include <QApplication>
 #include <QWidget>
 #include <QVariant>
@@ -45,6 +47,30 @@
 #include <QStatusBar>
 #include <QVBoxLayout>
 
+using std::vector;
+
+class Channel
+{
+public: 
+    Channel(int id) : id(id) {}
+    void setupui(QWidget* parentMixer);
+    void play();
+    int getId() const { return id; }
+
+    QWidget*        VerticalLayoutWidget;
+    QVBoxLayout*    VerticalLayout;
+    QLabel*         Channeltext;
+    QDial*          ChannelPosition;
+    QCheckBox*      ChannelSolo;
+    QCheckBox*      ChannelMute;
+    QHBoxLayout*    HorizontalLayout;
+    QSlider*        ChannelVolumeSlider;
+    QProgressBar*   ChannelVolumeBar;
+
+private:
+    int id;
+};
+
 namespace DAWUI
 {
 
@@ -59,6 +85,8 @@ namespace DAWUI
     QAction*    actionCopy;
     QAction*    actionPaste;
     QAction*    actionDelete;
+    QFrame*     mixer;
+
 
     // -- DawUI API function declarations --
     
@@ -73,6 +101,10 @@ namespace DAWUI
     void init(const char* title, int width, int height, QWidget &window);
 
     void createui(QMainWindow* window);
+    
+    void addChannel(vector<Channel*>& channels);
+
+    void removeChannel(vector<Channel*>& channels, int index);
 }
 
 #endif 

@@ -47,7 +47,7 @@ So rust is not fully off the table
 
 ### Ubuntu / Debian packages
 ```
-sudo apt install qt6-base-dev 
+sudo apt install qt6-base-dev libburn-dev cmake make
 ```
 
 ### Fedora / RedHat packages

@@ -45,7 +45,11 @@ typedef struct cd_pcm_frame_t
 /*These are based on the rust functions*/
 int read_cd_sector(const char* device_path, uint32_t sector, uint8_t* buffer);
 
-int burn_cd(const char* device_path, const uint8_t* buffer, uint32_t size);
+typedef struct AudioCD AudioCD;
+
+AudioCD* audio_cd_new();
+void add_track(AudioCD* cd, const uint8_t* data, uint32_t size);
+int burn(AudioCD* cd, const char* device_path);
 
 #ifdef __cplusplus
 }
