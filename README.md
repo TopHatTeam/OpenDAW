@@ -1,4 +1,7 @@
+<img src="assets/logo.png" width="300">
+
 # OpenDAW
+
 A Open Source Digital Audio Workstation
 
 ### What platforms does this support?

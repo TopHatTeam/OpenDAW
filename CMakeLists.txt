@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(OpenDAW)
 
+# Set the CMake module path to find custom modules
+add_subdirectory(extern/rtmidi)
+add_subdirectory(OpenDAWLib)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
@@ -11,16 +15,17 @@ set(CMAKE_AUTOUIC ON)
 add_executable(${PROJECT_NAME}
     main.cpp
     DawUI.cpp
+    Midi.cpp
     AudioError.c
     AudioCore.c
     Common.c
 )
 
 # Find Qt6 after defining the executable
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets )
 
 # Link Qt6 Widgets
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets OpenDAWLibStatic rtmidi)
 
 # Windows-specific libraries
 if(WIN32)

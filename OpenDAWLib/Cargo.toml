@@ -1,0 +1,17 @@
+[package]
+name = "opendawlib"
+version = "0.1.0"
+edition = "2024"
+
+[features]
+libburn_disc_with_incomplete_session = []
+
+[lib]
+create-type = ["staticlib", "cdylib"]
+
+[build-dependencies]
+cmake = "0.1"
+
+[dependencies]
+cdtoc = "0.11.*"
+libc = "0.2.175"

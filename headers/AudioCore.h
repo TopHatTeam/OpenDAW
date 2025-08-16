@@ -20,21 +20,33 @@
 #include <math.h>
 
 #if defined(__linux__)
-#include <alsa/control.h>
-#include <alsa/timer.h>
-#include <alsa/asoundlib.h>
-#include <unistd.h>
+    #include <alsa/control.h>
+    #include <alsa/timer.h>
+    #include <alsa/asoundlib.h>
+    #include <unistd.h>
 
 #elif defined(_WIN32)
-#include <windows.h>
-#include <initguid.h>
-#include <mmdeviceapi.h>
-#include <audioclient.h>
-#include <functiondiscoverykeys_devpkey.h>
-    #ifndef sleep
-    #define sleep(x) Sleep(1000 * (x))
-    #endif 
+    #include <windows.h>
+    #include <initguid.h>
+    #include <mmdeviceapi.h>
+    #include <audioclient.h>
+    #include <functiondiscoverykeys_devpkey.h>
+        #ifndef sleep
+        #define sleep(x) Sleep(1000 * (x))
+        #endif 
 #endif
+
+
+/* TOOK THE SDKS for MacOS Xcode*/
+#elif defined(__apple__)
+    #include <CoreFoundation/CoreFoundation.h>
+    #include <CoreAudio/CoreAudio.h>
+    #include <CoreAudio/AudioHardware.h>
+    #include <AudioToolbox/AudioToolbox.h>
+    #include <AudioUnit/AudioUnit.h>
+#endif
+
+
 
 // Check if compiler supports IEC 559 (IEEE 754) floating-point arithmetic
 #if defined(__clang__)
@@ -439,4 +451,4 @@ InstrumentInfo* CreateInstrument(const char* name, uint32_t id);
 }
 #endif
 
-#endif
+#endif // AUDIOCORE_H
