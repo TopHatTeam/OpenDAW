@@ -12,6 +12,19 @@
 #include "headers/DawUI.hpp"
 #include <qnamespace.h>
 
+Channel::~Channel()
+{
+    delete VerticalLayoutWidget;
+    delete VerticalLayout;
+    delete Channeltext;
+    delete ChannelPosition;
+    delete ChannelSolo;
+    delete ChannelMute;
+    delete HorizontalLayout;
+    delete ChannelVolumeSlider;
+    delete ChannelVolumeBar;
+}
+
 void Channel::setupui(QWidget* parentMixer)
 {
     // Main container widget for this channel

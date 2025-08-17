@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(OpenDAW)
 
 # Set the CMake module path to find custom modules
-add_subdirectory(extern/rtmidi)
+add_subdirectory(extern/rtmidi)     # midi library
+add_subdirectory(extern/libsndfile) # sound library
 add_subdirectory(OpenDAWLib)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -19,13 +20,17 @@ add_executable(${PROJECT_NAME}
     AudioError.c
     AudioCore.c
     Common.c
+    vst.c   # added vst support
 )
 
 # Find Qt6 after defining the executable
 find_package(Qt6 REQUIRED COMPONENTS Widgets )
 
+# Find libsndfile 
+find_package(SndFile REQUIRED)
+
 # Link Qt6 Widgets
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets OpenDAWLibStatic rtmidi)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets OpenDAWLibStatic rtmidi SndFile::sndfile)
 
 # Windows-specific libraries
 if(WIN32)

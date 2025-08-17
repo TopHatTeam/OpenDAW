@@ -30,13 +30,72 @@ pub const CD_SAMPLES_PER_SECTOR: usize      = 588;
 pub const CD_SECTOR_SIZE: usize             = CD_SAMPLES_PER_SECTOR * (CD_BITDEPTH / 8) * CD_CHANNELS;
 pub const LIBBURN_PACK_NUM_TYPES: usize     = 0x10;
 
-#[repr(C)]
-pub struct BurnTocEntry 
-{
+#[cfg(target_os = "freebsd")]
+const BURN_OS_TRANSPORT_BUFFER_SIZE: usize  = 65536;
 
+#[cfg(target_os = "linux")]
+const BURN_OS_TRANSPORT_BUFFER_SIZE: usize  = 65536;
+
+#[cfg(target_os = "macos")]
+const BURN_OS_TRANSPORT_BUFFER_SIZE: usize  = 16384;
+
+#[cfg(target_os = "windows")]
+const BURN_OS_TRANSPORT_BUFFER_SIZE: usize  = 32768;
+
+#[cfg(not(any(target_os = "linux", target_os = "freebsd", target_os = "windows", target_os = "macos")))]
+const BURN_OS_TRANSPORT_BUFFER_SIZE: usize = 8192;
+
+#[repr(C)]
+pub struct Buffer 
+{
+    pub data: [c_char; BURN_OS_TRANSPORT_BUFFER_SIZE + 4096],
+    pub sectors: c_int,
+    pub bytes: c_int,
 }
 
 #[repr(C)]
+pub struct Command
+{
+    pub opcode: [c_char; 16],
+    pub oplen: c_int,
+    pub dir: c_int,
+    pub dxfer_len: c_int,
+    pub sense: [c_char; 128],
+    pub error: c_int,
+    pub retry: c_int,
+    pub page: *mut Buffer,
+    pub timeout: c_int, /* milliseconds */
+    pub start_time: c_double,
+    pub end_time: c_double,
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct BurnTocEntry 
+{
+    pub sessions: c_uchar,
+    pub adr: c_uchar,
+    pub control: c_uchar,
+    pub tno: c_uchar,
+    pub point: c_uchar,
+    pub min: c_uchar,
+    pub sec: c_uchar,
+    pub frame: c_uchar,
+    pub zero: c_uchar,
+    pub pmin: c_uchar,
+    pub psec: c_uchar,
+    pub pframe: c_uchar,
+    pub extensions_valid: c_uchar,
+    pub session_msb: c_uchar,
+    pub point_msb: c_uchar,
+    pub start_lba: c_int,
+    pub track_blocks: c_int,
+    pub last_recorded_address: c_int,
+    pub track_status_bits: c_int,
+}
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Isrc 
 {
     pub has_isrc: c_int,
@@ -47,6 +106,7 @@ pub struct Isrc
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct BurnCDText
 {
     pub payload: [*mut c_uchar; LIBBURN_PACK_NUM_TYPES],
@@ -55,18 +115,35 @@ pub struct BurnCDText
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct BurnSource
 {
 
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct BurnSession
 {
-
+    pub firsttrack: c_char,
+    pub lasttrack: c_char,
+    pub hidefirst: c_int,
+    pub start_m: c_char,
+    pub start_s: c_char,
+    pub start_f: c_char,
+    pub leadout_entry: *mut BurnTocEntry,
+    pub tracks: c_int,
+    pub track: *mut *mut BurnTrack,
+    pub refcnt: c_int,
+    pub cdtext: [*mut BurnCDText; 8],
+    pub cdtext_char_code: [c_char; 8],
+    pub cdtext_copyright: [c_char; 8],
+    pub cdtext_language: [c_char; 8],
+    pub mediacatalog: [c_char; 14],
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct BurnTrack 
 {
     pub refcnt: c_int,
@@ -105,6 +182,7 @@ pub struct BurnTrack
 }
 
 #[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct BurnDisc 
 {
     pub sessions: c_int,
@@ -293,7 +371,17 @@ pub struct BurnDrive
     pub role_5_nwa: c_int, /* Next Writeable Address for drive_role == 5 */
     pub do_no_immed: c_int,
     pub toc_temp: c_int,
+    pub toc_entry: *mut BurnTocEntry,
 
+    /* Get size and free space of drive buffer */
+    pub read_buffer_capacity: Option<extern "C" fn(d: *mut BurnDrive) -> c_int>,
+
+    /* format media (e.g. DVD+RW) */
+    pub format_unit: Option<extern "C" fn(d: *mut BurnDrive, size: off_t, flag: c_int) -> c_int>,
+
+    pub read_format_capacities: Option<extern "C" fn(d: *mut BurnDrive, top_wanted: c_int) -> c_int>,
+
+    pub read_10: Option<extern "C" fn(d: *mut BurnDrive, start: c_int, amount: c_int, buf: *mut Buffer) -> c_int>,
 
     /* #ifdef Libburn_disc_with_incomplete_session */
 

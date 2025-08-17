@@ -14,7 +14,11 @@
 #ifndef MIDI_H
 #define MIDI_H
 
+#include <iostream>
+#include <string>
+#include <cstdlib>
 #include "AudioCore.h"
+#include "RtMidi.h"
 
 /*TODO: The rest of this header*/
 
@@ -26,6 +30,8 @@
 #define MIDI_PROGRAM_CHANGE     0xC0
 #define MIDI_PITCH_BEND         0xE0
 
+using std::string;
+
 typedef enum 
 {
     MPL_ACOUSTIC_BASS_DRUM  = 35,
@@ -35,5 +41,28 @@ typedef enum
     MPL_HAND_CLAP           = 39,
 
 } MIDI_PERCUSSION_LAYOUT;
+
+class MIDIDevice
+{
+public:
+    MIDIDevice();
+    ~MIDIDevice() 
+    {
+        delete midiin;
+        delete midiout;
+    }
+    int         getid() const { return id; }
+    RtMidiIn*   GetMidiIn() const { return midiin; }
+    RtMidiOut*  GetMidiOut() const { return midiout; }
+    RtMidiIn*   SetMidiIn(RtMidiIn* in) { midiin = in; }
+    RtMidiOut*  SetMidiOut(RtMidiOut* out) { midiout = out; }
+
+    string portName;
+    unsigned int nPorts;
+private:
+    int         id;
+    RtMidiIn*   midiin;
+    RtMidiOut*  midiout;
+};
 
 #endif  

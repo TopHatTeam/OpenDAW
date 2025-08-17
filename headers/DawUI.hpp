@@ -52,6 +52,7 @@ using std::vector;
 class Channel
 {
 public: 
+    ~Channel();
     Channel(int id) : id(id) {}
     void setupui(QWidget* parentMixer);
     void play();
