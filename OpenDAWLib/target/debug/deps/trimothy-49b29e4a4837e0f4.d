@@ -1,0 +1,9 @@
+/media/andrew-skatzes/WD_BLACK/Source/repo/git/OpenDAW/OpenDAWLib/target/debug/deps/trimothy-49b29e4a4837e0f4.d: /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/lib.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/pattern.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_mut.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_normal.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_slice.rs
+
+/media/andrew-skatzes/WD_BLACK/Source/repo/git/OpenDAW/OpenDAWLib/target/debug/deps/libtrimothy-49b29e4a4837e0f4.rmeta: /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/lib.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/pattern.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_mut.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_normal.rs /home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_slice.rs
+
+/home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/lib.rs:
+/home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/pattern.rs:
+/home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_mut.rs:
+/home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_normal.rs:
+/home/andrew-skatzes/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/trimothy-0.9.0/src/trim_slice.rs:

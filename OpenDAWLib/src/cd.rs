@@ -13,11 +13,11 @@
 
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
-use std::os::raw::{c_char, c_uint};
+use std::os::raw::{c_char, c_uchar, c_double, c_int, c_uint};
 use std::ffi::CStr;
 use std::u8;
-use std::ptr;
 use libc::{pthread_mutex_t, off_t};
+use modular_bitfield::prelude::*;
 
 /*
     basically rewritting libburn to Rust... i must hate my self
@@ -391,6 +391,21 @@ pub struct BurnDrive
     /* #endif */
 }
 
+#[repr(C)]
+struct BurnReadOpts
+{
+    pub drive: *mut BurnDrive,
+    pub refcount: c_int,
+    pub raw: bool, /* unsigned int raw:1 */
+    pub c2errors: bool,
+    pub subcodes_audio: bool,
+    pub hardware_error_recovery: bool,
+    pub report_recovered_errors: bool,
+    pub transfer_damaged_blocks: bool,
+    pub hardware_error_retries: c_uchar,
+    pub dap_bit: c_uint,
+}
+
 
 /*
     `#[no_mangle]` ensures the Rust compiler does not mangle the function name. 
@@ -398,7 +413,7 @@ pub struct BurnDrive
     This attribute makes the symbol literally "read_cd_sector" in the compiled binary,
     which allows C or other languages that use C-style linking to call it reliably.
 */
-#[no_mangle]
+#[no_mangle] /* stop fucking complaining about using #[unsafe(no_mangle)] it's not valid! */
 pub extern "C" fn read_cd_sector(
     device_path:    *const c_char,  /* Raw pointer to a C-style string (const char*) pointing to the device path. 
                                          Must be NUL-terminated. */
@@ -490,10 +505,4 @@ pub extern "C" fn read_cd_sector(
             -5 
         }
     }
-}
-
-extern "C"
-{
-    /* Expose the C/C++ function of read_cd_sector */
-    fn read_cd_sector(device_path: *const c_char, sector: c_uint, buffer: *mut u8) -> i32;
 }
