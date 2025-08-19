@@ -9,8 +9,13 @@
 //
 // ---------------------------------------------------------
 
+
 #ifndef AUDIOCORE_H
-#define AUDIOCORE_H 
+#define AUDIOCORE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,11 +37,8 @@
         #ifndef sleep
         #define sleep(x) Sleep(1000 * (x))
         #endif 
-#endif
-
-
 /* TOOK THE SDKS for MacOS Xcode*/
-#elif defined(__apple__)
+#elif defined(__APPLE__)
     #include <CoreFoundation/CoreFoundation.h>
     #include <CoreAudio/CoreAudio.h>
     #include <CoreAudio/AudioHardware.h>
@@ -408,9 +410,13 @@ typedef struct
     
 } noteinfo_t;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+typedef struct audio_clip_t
+{
+    float start;
+    float length;
+    bool selected;
+} audio_clip_t;
+
 
 // -- AudioCore API platform specific variables --
 
@@ -426,6 +432,15 @@ extern "C" {
 
 // -- AudioCore API function declarations --
 
+
+int AudioCore_Config();
+
+/**
+ * @brief initializes the Audio backend for AudioCore
+ * @param device the audio device for output
+ * @param samplerate the sample rate for the Audio backend to run at
+ * @returns 0 if successfully and 1 if unsuccessful
+ */
 int AudioCore_Init(const char* device, unsigned int samplerate);
 
 /** 
@@ -448,4 +463,6 @@ InstrumentInfo* CreateInstrument(const char* name, uint32_t id);
     
 #ifdef __cplusplus
 }
+#endif
+
 #endif

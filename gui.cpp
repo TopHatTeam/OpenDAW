@@ -402,18 +402,125 @@ int OpenDAW::create_window()
     return 0;
 }
 
-void OpenDAW::render_gui(ImVec4 clearcolor)
+void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int width, int height)
 {
     ImGui_ImplVulkan_NewFrame();
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::Begin("OpenDAW");
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(ImVec2(width, height));
+    ImGui::Begin("OpenDAW", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
+
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("New Project", "Ctrl+N"))
+            {
+                
+            }
+
+            if (ImGui::MenuItem("Open Project", "Ctrl+O"))
+            {
+
+            }
+
+            if (ImGui::MenuItem("Save Project", "Ctrl+S"))
+            {
+
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
     
-    ImGui::Text("If you've gotten this far it means your code is good.");
+    /* The timeline track's horizontal zoom and scoll*/
+    ImGui::SliderFloat("Zoom", &timeline_zoom, 0.25f, 4.0f);
+    ImGui::SliderFloat("Scroll Horizontal", &timeline_scroll, 0.0f, 100.0f);
+    ImGui::SliderFloat("Scroll vertical", &timeline_scroll_h, 0.0f, 100.0f);
 
+    int track_height_win = height / 2;
+
+    ImGui::BeginChild("TimelineRegion", ImVec2(width, track_height_win), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+    float track_height      = 40.0f;
+    float time_to_pixels    = pixels_per_seconds * timeline_zoom;
+    float total_track_height = tracks.size() * track_height;
+
+    ImDrawList* track_draw_list         = ImGui::GetWindowDrawList();
+    ImVec2      track_cursor            = ImGui::GetCursorPos();
+
+    /* Draw track timeline grid (vertical lines) */
+    for (int i = 0; i < 60; i++)
+    {
+        float x = track_cursor.x - timeline_scroll + i * time_to_pixels;
+        track_draw_list->AddLine(ImVec2(x, track_cursor.y), ImVec2(x, track_cursor.y + height), IM_COL32(200, 200, 200, 80));
+    }
+
+    // Currently in development
+    /* Draw track timeline grid (horizontal lines)*/
+    //for (int i = 0; i < 60; i++)
+    //{
+    //    float y = track_cursor.y + timeline_scroll_h + i * time_to_pixels;
+    //    track_draw_list->AddLine(ImVec2(track_cursor.x, y), ImVec2(track_cursor.x + width, y), IM_COL32(200, 200, 200, 80)); 
+    //}
+
+    /* Iterate tracks */
+    for (size_t i = 0; i < tracks.size(); i++)
+    {
+        float y = track_cursor.y + i * track_height;
+
+        /* Draw the track background*/
+        track_draw_list->AddRectFilled(ImVec2(track_cursor.x, y), ImVec2(track_cursor.x + width, track_height),
+        IM_COL32(50, 50, 50, 255));
+
+        /* Track text*/
+        ImGui::SetCursorScreenPos(ImVec2(track_cursor.x + 5, y + 5));
+        ImGui::Text("%s", tracks[i].name.c_str());
+
+        /* Draw the clips there is a complex bullshit formula need to make this so read carefully*/
+        for (auto& clip : tracks[i].clip)
+        {
+            float xx = track_cursor.x - timeline_scroll + clip.start * time_to_pixels;
+            float xxx = xx + clip.length * time_to_pixels;
+
+            /* This variable can be read as this 
+                ImU32 color;
+                if (clip.selected)
+                {
+                    color = IM_COL32(200, 100, 100, 255);
+                }
+                else 
+                {
+                    color = IM_COL32(100, 200, 100, 255);
+                }
+            */
+            ImU32 color = clip.selected ? IM_COL32(200, 100, 100, 255) : IM_COL32(100, 200, 100, 255);
+
+            /* Make that clip into a rectangle*/
+            track_draw_list->AddRectFilled(ImVec2(xx, y), ImVec2(xxx, y + track_height - 2), color, 4.0f);
+
+            ImGui::SetCursorScreenPos(ImVec2(xx, y));
+            ImGui::InvisibleButton(("clip" + std::to_string((uintptr_t)&clip)).c_str(), ImVec2(xxx - xx, track_height - 2));
+
+            if (ImGui::IsItemClicked())
+            {
+                clip.selected = !clip.selected;
+            }
+
+            if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+            {
+                float delta = ImGui::GetIO().MouseDelta.x / time_to_pixels;
+                clip.start += delta;
+                if (clip.start < 0) clip.start = 0;
+            }   
+        }
+    }
+
+    ImGui::EndChild();
+    
     ImGui::End();
-
 
     ImGui::Render();
 

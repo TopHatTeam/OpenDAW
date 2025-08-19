@@ -21,6 +21,11 @@
     IMMDevice* audiodev = NULL;
 #endif
 
+int AudioCore_Config()
+{
+    
+}
+
 int AudioCore_Init(const char* device, unsigned int samplerate)
 {
 #if defined(__linux__)

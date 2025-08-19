@@ -12,11 +12,16 @@
 #include "headers/AudioCore.h"
 #include "headers/AudioError.h"
 #include "headers/gui.hpp"
+#include <pthread.h>
 // #include "headers/DawUI.hpp"
 
+using std::vector;
 
 int main(int argc, char *argv[])
 {
+    static vector<audio_track_t> the_culprit;
+    static vector<audio_track_t>& tracks = the_culprit;
+    AudioCore_Init("default", 44100);
 
     /* We need to see the damages and make sure the program isn't total'd*/
     if (OpenDAW::create_window() != 0)
@@ -103,10 +108,12 @@ int main(int argc, char *argv[])
             }
 
             /* Now here comes the real Graphical user interface*/
-            OpenDAW::render_gui(clear_color);
+            OpenDAW::render_gui(clear_color, tracks, fb_width, fb_height);
 
         }
     }
+
+    AudioCore_Cleanup();
 
     OpenDAW::cleanup_vulkan();
     OpenDAW::cleanup_vulkan_window();
@@ -119,6 +126,6 @@ int main(int argc, char *argv[])
 
     SDL_DestroyWindow(OpenDAW::window);
     SDL_Quit();
-    
+
     return 0;
 }

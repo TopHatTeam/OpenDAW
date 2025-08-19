@@ -11,6 +11,9 @@
 //
 // ---------------------------------------------------------
 
+#ifndef GUI_HPP
+#define GUI_HPP
+
 #include <fmt/std.h>
 #include <fmt/core.h>
 #include <SDL3/SDL.h>
@@ -19,10 +22,19 @@
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_vulkan.h"
+#include "AudioCore.h"
 
 /* by the way if building this gives you multiple declaring of any of these things defined in the namespace
     it's most likely because of forgetting inline for variables
 */
+
+using std::vector, std::string;
+
+struct audio_track_t
+{   
+    string name;
+    vector<audio_clip_t> clip;
+};
 
 namespace OpenDAW 
 {
@@ -42,6 +54,11 @@ namespace OpenDAW
     inline VkResult                    window_error;
     inline int                         width, height;
     inline ImGui_ImplVulkanH_Window*   vk_window        = nullptr;
+
+    static inline float                 timeline_zoom       = 1.0f;
+    static inline float                 timeline_scroll     = 0.0f;
+    static inline float                 timeline_scroll_h     = 0.0f;
+    static inline float                 pixels_per_seconds  = 100.0f;
     
     // -- SDL3 variables --
     inline float                   main_scale;
@@ -67,5 +84,15 @@ namespace OpenDAW
 
     int create_window();
 
-    void render_gui(ImVec4 clearcolor);
+    /**
+     * @brief This renders the Graphical User Interface
+     * @param clearcolor The color that displays when you clear the screen
+     * @param tracks a vector reference to the tracks structure
+     * @param width The width of the window
+     * @param height The height of the window
+     * @returns void
+     */
+    void render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int width, int height);
 }
+
+#endif
