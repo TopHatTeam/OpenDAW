@@ -11,8 +11,6 @@
 //
 // ---------------------------------------------------------
 
-extern crate libc;
-
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
 use std::os::raw::{c_char, c_uchar, c_double, c_int, c_uint};

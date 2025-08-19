@@ -101,6 +101,7 @@ endif()
 # Link everything
 # -----------------------------
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    #OpenDAWLibStatic
     rtmidi
     SndFile::sndfile
     fmt::fmt

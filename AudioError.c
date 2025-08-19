@@ -16,16 +16,25 @@
 void merror_linux(const char* msg, ...)
 {
     char buffer[1024];  // <-- Temporary buffer to hold the formatted message
-    char command[1200]; // <-- holds the zenity command
 
     va_list args;                                   // <-- Declare a variable to hold the variable arguments
     va_start(args, msg);                            // <-- Initialize 'args' to point to the first argument after 'msg'
     vsnprintf(buffer, sizeof(buffer), msg, args);   // <-- Write formatted string into buffer
     va_end(args);                                   // <-- Clean up the variable argument list
 
-    snprintf(command, sizeof(command), "zenity --error --text='%s'", buffer);
-    
-    system(command);
+    /* Damn how pissed was I?*/
+    FILE* fucking_work = popen("zenity --error --text\"$(cat)\"", "w");
+
+    if (fucking_work)
+    {
+        fprintf(fucking_work, "%s", buffer);
+        pclose(fucking_work);
+    }
+    else 
+    {   
+        /* backup just in case this code doesn't work*/
+        fprintf(stderr, "ERROR: %s\n", buffer);
+    }
 }
 
 #elif defined(_WIN32)

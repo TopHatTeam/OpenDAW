@@ -20,7 +20,8 @@ I found a way to make MacOS support and that involves using a virtual machine to
 
 ### Why use a BSD Clause 3 license?
 
-This is suppose to be a blueprint for DAW developers. They can use this code freely without publicizing their work. This can be used for educational purposes, etc
+This is suppose to be a blueprint for DAW developers. They can use this code freely without publicizing their work. This can be used for educational purposes, etc.
+Also don't use my name to promote your custom DAW. That's jus not cool
 
 ### What are the features?
 
@@ -39,39 +40,48 @@ So rust is not fully off the table
 
 ### Technology
 
-- **Languages**: C/C++, Rust, Objective-C
-- **GUI Toolkit**: Qt6
+- **Languages**: C/C++, Rust, Objective-C++
+- **GUI Toolkit**: ImGui
 - **Audio Backend (Linux)**: ALSA
 
 ### Dependencies
 
-- Qt6 (last Gtk 4.0 was too complex)
-- ALSA (Linux)
-- Rust (Don't worry I'll help you)
+- ImGui &rarr; For the graphical user interface
+- ALSA &rarr; For Linux audio backend
+- Rust &rarr; For specific memory and logic safety areas
+- fmt &rarr; For a bloat-free and fast c++ library
+- SDL3 &rarr; For making the window
+- rtmidi &rarr; For implementing the MIDI functionality
+- libsndfile &rarr; For exporting and importing sound formats 
 
 
 ### Ubuntu / Debian packages
-```
-sudo apt install qt6-base-dev libburn-dev cmake make clang clang++
+
+```bsh
+sudo apt install build-essential libburn-dev cmake make clang clang++
 ```
 
 Optional installs
-```
+
+```bash
 sudo apt install python3
 ```
 
 ### Fedora / RedHat packages
-```
+
+```bash
 sudo dnf install gtk4-devel
 ```
 
 ### Arch packages
-```
+
+```bash
 sudo pacman -S gtk4
 ```
 
 ### MSYS2
-```
+
+```bash
 pacman -S mingw-w64-x86_64-gtk4
 ```
 
@@ -79,12 +89,13 @@ pacman -S mingw-w64-x86_64-gtk4
 
 ### install dependencies
 
-```
+```bash
 pacman -S mingw-w64-x86_64-pkgconf make cmake
 ```
 
 If you want to make the icon 
-```
+
+```bash
 pacman -S mingw-w64-x86_64-icoutils
 ```
 
@@ -98,7 +109,8 @@ Now to do follow the following steps to get this to work
 - You will need to close and reopen your coding editor for this to work. Then look at the *How to create the icon?* for further information
 
 ### Now compiling
-```
+
+```bash
 cd /path/to/OpenDAW
 mkdir build
 cd build

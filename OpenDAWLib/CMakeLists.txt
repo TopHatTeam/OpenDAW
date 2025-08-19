@@ -10,20 +10,31 @@ set(RUST_CRATE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 # Output directory for Cargo builds
 set(RUST_TARGET_DIR "${CMAKE_BINARY_DIR}/target")
 
-if(UNIX)
-    set(RUST_LIB "${RUST_TARGET_DIR}/release/libopendawlib.a")
+if(UNIX AND NOT APPLE)
+    set(RUST_LIB "${RUST_TARGET_DIR}/x86_64-unknown-linux-gnu/release/libopendawlib.a")
 elseif(WIN32)
-    set(RUST_LIB "${RUST_TARGET_DIR}/release/opendawlib.lib")
+    set(RUST_LIB "${RUST_TARGET_DIR}/x86_64-pc-windows-msvc/release/opendawlib.lib")
 endif()
 
-# Build Rust library
-add_custom_command(
-    OUTPUT ${RUST_LIB}
-    COMMAND ${CARGO} build --release
-    WORKING_DIRECTORY "${RUST_CRATE_DIR}"
-    COMMENT "Building Rust library OpenDAWLib"
-    VERBATIM
-)
+if(UNIX AND NOT APPLE)
+    # Build Rust library for linux
+    add_custom_command(
+        OUTPUT ${RUST_LIB}
+        COMMAND ${CARGO} build --release --target x86_64-unknown-linux-gnu
+        WORKING_DIRECTORY "${RUST_CRATE_DIR}"
+        COMMENT "Building Rust library OpenDAWLib"
+        VERBATIM
+    )
+elseif(WIN32)
+    # Build Rust library for linux
+    add_custom_command(
+        OUTPUT ${RUST_LIB}
+        COMMAND ${CARGO} build --release --target x86_64-pc-windows-msvc
+        WORKING_DIRECTORY "${RUST_CRATE_DIR}"
+        COMMENT "Building Rust library OpenDAWLib"
+        VERBATIM
+    )
+endif()
 
 # Custom target to wrap the command
 add_custom_target(OpenDAWLib ALL

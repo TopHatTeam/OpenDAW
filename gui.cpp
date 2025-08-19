@@ -110,10 +110,11 @@ void OpenDAW::setup_vulkan(ImVector<const char*> instance_extension)
     device_extension.push_back("VK_KHR_swapchain");
 
     /* Enumerate physical device extension */
-    uint32_t properties_device_count;
+    uint32_t properties_device_count = 0;
     ImVector<VkExtensionProperties> properties_device;
-    vkEnumerateDeviceExtensionProperties(o_physicaldevice, nullptr, &properties_device_count, properties_device.Data);
+    vkEnumerateDeviceExtensionProperties(o_physicaldevice, nullptr, &properties_device_count, nullptr);
     properties_device.resize(properties_device_count);
+    vkEnumerateDeviceExtensionProperties(o_physicaldevice, nullptr, &properties_device_count, properties_device.Data);
 
     const float queue_priority[] = { 1.0f };
     VkDeviceQueueCreateInfo queue_info[1] = {};
@@ -152,10 +153,15 @@ void OpenDAW::setup_vulkan(ImVector<const char*> instance_extension)
 
 void OpenDAW::setup_vulkan_window(ImGui_ImplVulkanH_Window* wd, VkSurfaceKHR surface, int width, int height)
 {
-    wd->Surface = surface;
-    VkBool32 res;
-    vkGetPhysicalDeviceSurfaceSupportKHR(o_physicaldevice, o_queuefamily, wd->Surface, &res);
-    if (res != VK_TRUE)
+    wd->Surface                         = surface;
+    wd->Width                           = width;
+    wd->Height                          = height;
+    wd->ClearValue.color.float32[0]     = 0.0f;
+    wd->ClearValue.color.float32[1]     = 0.0f;
+    wd->ClearValue.color.float32[2]     = 0.0f;
+    VkBool32 supported                  = VK_FALSE;
+    vkGetPhysicalDeviceSurfaceSupportKHR(o_physicaldevice, o_queuefamily, wd->Surface, &supported);
+    if (supported != VK_TRUE)
     {
 #if defined(__linux__)
 
@@ -177,13 +183,14 @@ void OpenDAW::setup_vulkan_window(ImGui_ImplVulkanH_Window* wd, VkSurfaceKHR sur
     const VkColorSpaceKHR request_surface_color_space = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
     wd->SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(o_physicaldevice, wd->Surface, request_surface_image_format, (size_t)IM_ARRAYSIZE(request_surface_image_format), request_surface_color_space );
     VkPresentModeKHR present_modes[] = { VK_PRESENT_MODE_MAILBOX_KHR, VK_PRESENT_MODE_IMMEDIATE_KHR, VK_PRESENT_MODE_FIFO_KHR };
-    wd->PresentMode = ImGui_ImplVulkanH_SelectPresentMode(o_physicaldevice, wd->Surface, &present_modes[3], IM_ARRAYSIZE(present_modes));
+    wd->PresentMode = ImGui_ImplVulkanH_SelectPresentMode(o_physicaldevice, wd->Surface, present_modes, IM_ARRAYSIZE(present_modes));
+
 
     /* Create SwapChain, RenderPass, FrameBuffer, etc */
     IM_ASSERT(o_minimagecount >= 2);
     ImGui_ImplVulkanH_CreateOrResizeWindow(o_instance, o_physicaldevice, o_device, wd, o_queuefamily, o_allocator, width, height, o_minimagecount);
 
-
+    fmt::print("Vulkan window ready: {}x{}, Image = {}\n", wd->Width, wd->Height, wd->ImageCount);
 }
 
 void OpenDAW::cleanup_vulkan()
@@ -302,11 +309,14 @@ void OpenDAW::frame_present(ImGui_ImplVulkanH_Window* wd)
 
 int OpenDAW::create_window()
 {
+
+    fmt::print("Initializing SDL3\n");
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
 #if defined(__linux__)
 
-        merror_linux("SDL Initialzing error: %s", SDL_GetError());
+        fmt::print("SDL Initialzing error: {}", SDL_GetError());
+        //merror_linux("SDL Initialzing error: %s", SDL_GetError());
 
 #elif defined(_WIN32)
 
@@ -328,7 +338,8 @@ int OpenDAW::create_window()
     {
 #if defined(__linux__)
 
-        merror_linux("SDL Window initialzing error: %s", SDL_GetError());
+        fmt::print("SDL Window initialzing error: {}", SDL_GetError());
+        //merror_linux("SDL Window initialzing error: %s", SDL_GetError());
 
 #elif defined(_WIN32)
 
@@ -350,12 +361,19 @@ int OpenDAW::create_window()
     }
     setup_vulkan(extensions);
 
+    if (o_instance == VK_NULL_HANDLE)
+    {
+        fmt::print("Vulkan instance is invalid\n");
+        return -1;
+    }
+
     /* Create window surface */
     if (SDL_Vulkan_CreateSurface(window, o_instance, o_allocator, &surface) == 0)
     {
 #if defined(__linux__)
 
-        merror_linux("Failed to create Vulkan surface");
+        fmt::print("Failed to create vulkan surface");
+        //merror_linux("Failed to create Vulkan surface");
 
 #elif defined(_WIN32)
 
@@ -370,9 +388,47 @@ int OpenDAW::create_window()
     }
 
     SDL_GetWindowSize(window, &width, &height);
+    /*
+    memset(&o_mainwindowdata, 0, sizeof(o_mainwindowdata));
+        fuck this piece of shit code 
+    */
     vk_window = &o_mainwindowdata;
     setup_vulkan_window(vk_window, surface, width, height);
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
+    /* Now to finally show the window after Vulkan setup*/
+    SDL_ShowWindow(window);    
+
     return 0;
+}
+
+void OpenDAW::render_gui(ImVec4 clearcolor)
+{
+    ImGui_ImplVulkan_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
+    ImGui::NewFrame();
+
+    ImGui::Begin("OpenDAW");
+    
+    ImGui::Text("If you've gotten this far it means your code is good.");
+
+    ImGui::End();
+
+
+    ImGui::Render();
+
+
+    ImDrawData* draw_data = ImGui::GetDrawData();
+    const bool is_minimized = (draw_data->DisplaySize.x <= 0.0f || draw_data->DisplaySize.y <= 0.0f);
+
+    if (!is_minimized)
+    {
+        vk_window->ClearValue.color.float32[0] = clearcolor.x * clearcolor.w;
+        vk_window->ClearValue.color.float32[1] = clearcolor.y * clearcolor.w;
+        vk_window->ClearValue.color.float32[2] = clearcolor.z * clearcolor.w;
+        vk_window->ClearValue.color.float32[3] = clearcolor.w;
+        frame_render(vk_window, draw_data);
+        frame_present(vk_window);
+    }
+
 }

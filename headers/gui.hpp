@@ -34,14 +34,14 @@ namespace OpenDAW
     inline VkQueue                  o_queue             = VK_NULL_HANDLE;
     inline VkPipelineCache          o_pipelinecache     = VK_NULL_HANDLE;
     inline VkDescriptorPool         o_descriptorpool    = VK_NULL_HANDLE;
-    inline ImGui_ImplVulkanH_Window o_mainwindowdata;
+    inline ImGui_ImplVulkanH_Window o_mainwindowdata    = {};
     inline uint32_t                 o_minimagecount     = 2;
     inline bool                     o_swapchainrebuild  = false;
 
-    inline VkSurfaceKHR                surface         = VK_NULL_HANDLE;
+    inline VkSurfaceKHR                surface          = VK_NULL_HANDLE;
     inline VkResult                    window_error;
     inline int                         width, height;
-    inline ImGui_ImplVulkanH_Window*   vk_window;
+    inline ImGui_ImplVulkanH_Window*   vk_window        = nullptr;
     
     // -- SDL3 variables --
     inline float                   main_scale;
@@ -66,4 +66,6 @@ namespace OpenDAW
     static void frame_present(ImGui_ImplVulkanH_Window* wd);
 
     int create_window();
+
+    void render_gui(ImVec4 clearcolor);
 }
