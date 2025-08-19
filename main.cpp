@@ -11,19 +11,14 @@
 
 #include "headers/AudioCore.h"
 #include "headers/AudioError.h"
-#include "headers/DawUI.hpp"
+#include "headers/gui.hpp"
+// #include "headers/DawUI.hpp"
 
 /*Switching to Qt6 here fellows!*/
 
 int main(int argc, char *argv[])
 {
-#if defined(__linux__)
+    OpenDAW::create_window();
     
-    QApplication app(argc, argv);
-    QWidget window;
-    DAWUI::init("OpenDAW", 1920, 1080, window);
-#elif defined(_WIN32)
-    
-#endif
-    return app.exec();
+    return 0;
 }

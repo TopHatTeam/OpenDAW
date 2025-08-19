@@ -87,5 +87,6 @@
         "xlocinfo": "cpp",
         "xlocmes": "cpp",
         "xtr1common": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }

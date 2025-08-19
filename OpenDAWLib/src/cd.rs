@@ -11,13 +11,16 @@
 //
 // ---------------------------------------------------------
 
+extern crate libc;
+
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
 use std::os::raw::{c_char, c_uchar, c_double, c_int, c_uint};
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 use std::u8;
 use libc::{pthread_mutex_t, off_t};
-use modular_bitfield::prelude::*;
+use std::mem::MaybeUninit;
+use std::ptr;
 
 /*
     basically rewritting libburn to Rust... i must hate my self
@@ -46,6 +49,7 @@ const BURN_OS_TRANSPORT_BUFFER_SIZE: usize  = 32768;
 const BURN_OS_TRANSPORT_BUFFER_SIZE: usize = 8192;
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct Buffer 
 {
     pub data: [c_char; BURN_OS_TRANSPORT_BUFFER_SIZE + 4096],
@@ -54,6 +58,7 @@ pub struct Buffer
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct Command
 {
     pub opcode: [c_char; 16],
@@ -70,7 +75,7 @@ pub struct Command
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct BurnTocEntry 
 {
     pub sessions: c_uchar,
@@ -95,7 +100,7 @@ pub struct BurnTocEntry
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct Isrc 
 {
     pub has_isrc: c_int,
@@ -106,7 +111,7 @@ pub struct Isrc
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct BurnCDText
 {
     pub payload: [*mut c_uchar; LIBBURN_PACK_NUM_TYPES],
@@ -115,14 +120,14 @@ pub struct BurnCDText
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct BurnSource
 {
 
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct BurnSession
 {
     pub firsttrack: c_char,
@@ -143,7 +148,7 @@ pub struct BurnSession
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct BurnTrack 
 {
     pub refcnt: c_int,
@@ -182,7 +187,7 @@ pub struct BurnTrack
 }
 
 #[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone)]
 pub struct BurnDisc 
 {
     pub sessions: c_int,
@@ -250,6 +255,7 @@ pub enum BurnDiscStatus
 }
 
 #[repr(C)]
+#[derive(Default, Copy, Clone)]
 pub struct BurnFormatDescr
 {
     pub type_f: c_int,
@@ -258,6 +264,7 @@ pub struct BurnFormatDescr
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct BurnFeatureDescr
 {
     pub feature_code: u16,
@@ -268,6 +275,7 @@ pub struct BurnFeatureDescr
 }
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub struct BurnDrive
 {
     pub device_role: c_int,
@@ -406,6 +414,215 @@ struct BurnReadOpts
     pub dap_bit: c_uint,
 }
 
+pub struct SafeBurnDrive 
+{
+    inner: BurnDrive,
+}
+
+impl Default for BurnDiscStatus
+{
+    fn default() -> Self 
+    {
+        BurnDiscStatus::BurnDiscUnready
+    }
+}
+
+impl SafeBurnDrive
+{
+    pub fn new() -> Self
+    {
+        let mut mutex = MaybeUninit::<pthread_mutex_t>::uninit();
+        unsafe 
+        {
+            libc::pthread_mutex_init(mutex.as_mut_ptr(), ptr::null());
+        }
+
+        Self 
+        {
+            inner: BurnDrive 
+            {
+                device_role: 0,
+                bus_no: 0,
+                host_no: 0,
+                id: 0,
+                channel: 0,
+                lun: 0,
+                devname: ptr::null_mut(),
+                phys_if_std: 0,
+                phys_if_name: [0; 80],
+                global_index: 0,
+                access_lock: unsafe { mutex.assume_init() },
+                status: BurnDiscStatus::default(),
+                erasable: 0,
+                current_profile: 0,
+                current_profile_text: [0; 80],
+                current_is_cd_profile: 0,
+                current_is_supported_profile: 0,
+                current_is_guessed_profile: 0,
+                all_profiles: [0; 256],
+                num_profiles: 0,
+                features: ptr::null_mut(),
+                current_has_feat21h: 0,
+                was_feat21h_failure: 0,
+                current_feat21h_link_size: 0,
+                current_feat23h_byte4: 0,
+                current_feat23h_byte8: 0,
+                current_feat2fh_byte4: 0,
+                drive_serial_number: ptr::null_mut(),
+                drive_serial_number_len: 0,
+                media_serial_number: ptr::null_mut(),
+                media_serial_number_len: 0,
+                next_track_damaged: 0,
+                needs_close_session: 0,
+                needs_sync_cache: 0,
+                do_stream_recording: 0,
+                stream_recording_start: 0,
+                last_lead_in: 0,
+                last_lead_out: 0,
+                last_track_no: 0,
+                num_opc_tables: 0,
+                bg_format_status: 0,
+                disc_id: 0,
+                disc_bar_code: [0; 9],
+                disc_app_code: 0,
+                disc_info_valid: 0,
+                format_descr_type: 0,
+                format_curr_max_size: 0,
+                format_curr_blsas: 0,
+                best_format_type: 0,
+                num_format_descr: 0,
+                format_descriptors: [BurnFormatDescr::default(); 32],
+                release: 0,
+                silent_on_scsi_error: 0,
+                had_particular_error: 0,
+                stdio_fd: 0,
+                nwa: 0,
+                alba: 0,
+                start_lba: 0,
+                end_lba: 0,
+                do_simulate: 0,
+                complete_session: 0,
+                state_of_last_session: 0,
+                sent_default_page_05: 0,
+                media_capacity_remaining: 0,
+                media_lba_limt: 0,
+                media_read_capacity: 0,
+                mr_capacity_trusted: 0,
+                role_5_nwa: 0,
+                do_no_immed: 0,
+                toc_temp: 0,
+                toc_entry: ptr::null_mut(),
+                read_buffer_capacity: None,
+                read_format_capacities: None,
+                format_unit: None,
+                read_10: None,
+                #[cfg(feature = "libburn_disc_with_incompleted_session")]
+                incomplete_sessions: 0,
+            }
+        }
+    }
+
+    pub fn device_name(&self) -> Option<String> 
+    {
+        if self.inner.devname.is_null()
+        {
+            None
+        }
+        else 
+        {
+            unsafe 
+            {
+                Some(CStr::from_ptr(self.inner.devname)
+                    .to_string_lossy()
+                    .into_owned(),
+                )
+            }
+        }
+    }
+
+    pub fn read_buffer_capacity(&mut self) -> Option<c_int>
+    {
+        self.inner 
+            .read_buffer_capacity
+            .map(|f| f(&mut self.inner as *mut _))
+    }
+
+    pub fn format_unit(&mut self, size: off_t, flag: c_int) -> Option<c_int> 
+    {
+        self.inner 
+            .format_unit
+            .map(|f| f(&mut self.inner as *mut _, size, flag))
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn safe_burn_drive_new() -> *mut BurnDrive 
+{
+    let sbd = Box::new(SafeBurnDrive::new());
+    Box::into_raw(sbd) as *mut BurnDrive
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn safe_burn_drive_free(ptr: *mut BurnDrive)
+{
+    if ptr.is_null() 
+    {
+        return;
+    }
+
+    unsafe { Box::from_raw(ptr as *mut SafeBurnDrive); }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn safe_burn_drive_name(ptr: *const BurnDrive) -> *const c_char
+{
+    /* NULL checking to prevent dereferncing a NULL pointer */
+    if ptr.is_null() 
+    {
+        return std::ptr::null();
+    }
+
+    /* Casting ptr from a *const BurnDrive to a *const SafeBurnDrive
+        I didn't know this but '&*' turns a raw pointer into a safe Rust reference
+        also this is unsafe because we're dereferencing raw pointers 
+        which can totally fuck us up if the pointer is invaild
+     */
+    let sbd = unsafe { &*(ptr as *const SafeBurnDrive) };
+
+    /* This line of code is hard to explain to a C/C++ developer
+        so I'll just show the C++ code equivalent
+
+        const char* name = device_name();
+        if (name != nullptr)
+    
+     */
+    if let Some(name) = sbd.device_name()
+    {
+        /* we're taking a Rust string and converting it into a "null-terminated C string" 
+            ".unwrap()" -> is telling us to go ape shit if the string contains a "\0" an embedded null
+            The C language cannot have internal nulls
+            "cstr.into_raw()" -> give ownership of that memory to the caller. Which gives C/C++ the responsible for freeing this memory
+        */
+        let cstr = CString::new(name).unwrap();
+        cstr.into_raw()
+    }
+    else
+    {
+        /* If the device has no name we return with disappointing NULL */
+        std::ptr::null()
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn safe_burn_drive_string_free(ptr: *mut c_char)
+{
+    if ptr.is_null() 
+    {
+        return;
+    }
+
+    unsafe { CString::from_raw(ptr); } 
+}
 
 /*
     `#[no_mangle]` ensures the Rust compiler does not mangle the function name. 
@@ -413,7 +630,7 @@ struct BurnReadOpts
     This attribute makes the symbol literally "read_cd_sector" in the compiled binary,
     which allows C or other languages that use C-style linking to call it reliably.
 */
-#[no_mangle] /* stop fucking complaining about using #[unsafe(no_mangle)] it's not valid! */
+#[unsafe(no_mangle)] /* stop fucking complaining about using #[unsafe(no_mangle)] it's not valid! */
 pub extern "C" fn read_cd_sector(
     device_path:    *const c_char,  /* Raw pointer to a C-style string (const char*) pointing to the device path. 
                                          Must be NUL-terminated. */

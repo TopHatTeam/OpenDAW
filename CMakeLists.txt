@@ -1,10 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(OpenDAW)
-
-# Set the CMake module path to find custom modules
-add_subdirectory(extern/rtmidi)     # midi library
-add_subdirectory(extern/libsndfile) # sound library
-add_subdirectory(OpenDAWLib)
+project(OpenDAW LANGUAGES C CXX OBJCXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,37 +7,116 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# Add executable first
-add_executable(${PROJECT_NAME}
-    main.cpp
-    DawUI.cpp
-    Midi.cpp
-    AudioError.c
-    AudioCore.c
-    Common.c
-    vst.c   # added vst support
+# -----------------------------
+# External dependencies (from extern/)
+# -----------------------------
+add_subdirectory(extern/rtmidi)     # midi library
+add_subdirectory(extern/fmt)        # fmt
+add_subdirectory(extern/libsndfile) # sound library
+add_subdirectory(extern/SDL)        # SDL3
+
+# -----------------------------
+# Vulkan (system package)
+# -----------------------------
+find_package(Vulkan REQUIRED)
+
+# -----------------------------
+# Dear ImGui (SDL3 + Vulkan backends)
+# -----------------------------
+add_library(imgui STATIC 
+    extern/imgui/imgui.cpp
+    extern/imgui/imgui_draw.cpp
+    extern/imgui/imgui_tables.cpp
+    extern/imgui/imgui_widgets.cpp
+
+    # backends for SDL3 + Vulkan
+    extern/imgui/backends/imgui_impl_sdl3.cpp
+    extern/imgui/backends/imgui_impl_vulkan.cpp
 )
 
-# Find Qt6 after defining the executable
-find_package(Qt6 REQUIRED COMPONENTS Widgets )
+target_include_directories(imgui PUBLIC 
+    extern/imgui
+    extern/imgui/backends
+)
 
-# Find libsndfile 
-find_package(SndFile REQUIRED)
+target_link_libraries(imgui PUBLIC
+    SDL3::SDL3
+    Vulkan::Vulkan
+)
 
-# Link Qt6 Widgets
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets OpenDAWLibStatic rtmidi SndFile::sndfile)
+# fuck rust
 
-# Windows-specific libraries
+# -----------------------------
+# OpenDAW library
+# -----------------------------
+#add_subdirectory(OpenDAWLib)
+
+# -----------------------------
+# Executable for specific platforms
+# -----------------------------
+if(WIN32)
+    add_executable(${PROJECT_NAME}
+        main.cpp
+        Midi.cpp
+        AudioError.c
+        AudioCore.c
+        Common.c
+        gui.cpp
+        vst.c   # VST support
+    )
+endif()
+
+if(UNIX AND NOT APPLE)
+    add_executable(${PROJECT_NAME}
+        main.cpp
+        Midi.cpp
+        AudioError.c
+        AudioCore.c
+        Common.c
+        gui.cpp
+        vst.c   # VST support
+    )
+endif()
+
+if(APPLE)
+    add_executable(${PROJECT_NAME}
+        main.cpp
+        Midi.cpp
+        apple_platform.mm
+        AudioError.c
+        AudioCore.c
+        Common.c
+        gui.cpp
+        vst.c   # VST support
+    )
+endif()
+
+
+# -----------------------------
+# Qt6 (required)
+# -----------------------------
+#find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+# -----------------------------
+# Link everything
+# -----------------------------
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    rtmidi
+    SndFile::sndfile
+    fmt::fmt
+    SDL3::SDL3
+    Vulkan::Vulkan
+    imgui
+)
+
+# -----------------------------
+# Platform-specific bits
+# -----------------------------
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE ole32 uuid dsound)
 endif()
 
-# GTK4 for UNIX (optional, if you still want it)
-if(UNIX)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(GTK4 REQUIRED gtk4)
-    # Uncomment if you need GTK4
-    # target_include_directories(${PROJECT_NAME} PRIVATE ${GTK4_INCLUDE_DIRS})
-    # target_compile_options(${PROJECT_NAME} PRIVATE ${GTK4_CFLAGS_OTHER})
-    # target_link_libraries(${PROJECT_NAME} PRIVATE ${GTK4_LIBRARIES})
+if(UNIX AND NOT APPLE)
+    find_package(ALSA REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PRIVATE asound)
 endif()

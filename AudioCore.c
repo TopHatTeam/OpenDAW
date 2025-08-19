@@ -100,7 +100,7 @@ int AudioCore_Cleanup(void)
     {
         snd_pcm_drain(handle);
         snd_pcm_close(handle);
-        handle = null;
+        handle = NULL;
     }
 #elif defined(_WIN32)
     audiodev->lpVtbl->Release(audiodev);

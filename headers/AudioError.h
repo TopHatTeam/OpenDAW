@@ -13,6 +13,7 @@
 #define AUDIOERROR_H
 
 #include <stdio.h>      // for vsnprintf, fprintf, printf
+#include <stdlib.h>
 #include <stdarg.h>     // for va_list, va_start, va_end
 
 #if defined(_WIN32)
@@ -25,22 +26,26 @@ extern "C" {
 
 #if defined(__linux__)
 
+/**
+ * @brief Displays an error message for the linux platform 
+ * @param msg a constant character pointer to the message
+ * @param ... Additional arguments for formatting the message
+ * @note This uses a 2224-byte buffer to format the message
+ */
+void merror_linux(const char* msg, ...);
 
 #elif defined(_WIN32)
 
 /**
-*@brief Displays an error message for the Windows platform.
-*@param hwnd The handle to the parent window.
-*@param title The title of the error message box.
-*@param msg The error message to display, formatted with printf-style syntax.
-*@param ... Additional arguments for formatting the message.
-*@note This function uses a 1024-byte buffer to format the message
-*@returns void
+* @brief Displays an error message for the Windows platform.
+* @param hwnd The handle to the parent window.
+* @param title The title of the error message box.
+* @param msg The error message to display, formatted with printf-style syntax.
+* @param ... Additional arguments for formatting the message.
+* @note This function uses a 1024-byte buffer to format the message
+* @returns void
 */
 void merror_win32(HWND hwnd, const char* title, const char* msg, ...);
-
-#elif defined(__apple__)
-
 
 
 #endif

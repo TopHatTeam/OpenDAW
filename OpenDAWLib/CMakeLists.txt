@@ -8,7 +8,7 @@ find_program(CARGO cargo REQUIRED)
 set(RUST_CRATE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Output directory for Cargo builds
-set(RUST_TARGET_DIR "${CMAKE_BINARY_DIR}/rust")
+set(RUST_TARGET_DIR "${CMAKE_BINARY_DIR}/target")
 
 if(UNIX)
     set(RUST_LIB "${RUST_TARGET_DIR}/release/libopendawlib.a")
@@ -19,7 +19,7 @@ endif()
 # Build Rust library
 add_custom_command(
     OUTPUT ${RUST_LIB}
-    COMMAND ${CARGO} build --release --target-dir "${RUST_TARGET_DIR}"
+    COMMAND ${CARGO} build --release
     WORKING_DIRECTORY "${RUST_CRATE_DIR}"
     COMMENT "Building Rust library OpenDAWLib"
     VERBATIM

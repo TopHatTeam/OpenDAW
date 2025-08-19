@@ -15,13 +15,9 @@
 
 mod cd;
 
-use std::fs::File;
-use std::io::{Read, Seek, SeekFrom};
-use std::os::raw::{c_char, c_uint};
-use std::ffi::CStr;
+use std::os::raw::{c_char};
 use std::u8;
-use std::ptr;
-use libc::{pthread_mutex_t, off_t};
+
 
 // Third-party dependencies
 

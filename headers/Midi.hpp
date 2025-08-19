@@ -14,7 +14,7 @@
 #ifndef MIDI_H
 #define MIDI_H
 
-#include <iostream>
+#include <fmt/std.h>
 #include <string>
 #include <cstdlib>
 #include "AudioCore.h"
