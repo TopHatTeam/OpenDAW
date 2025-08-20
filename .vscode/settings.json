@@ -86,7 +86,8 @@
         "xfacet": "cpp",
         "xlocinfo": "cpp",
         "xlocmes": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "unistd.h": "c"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }

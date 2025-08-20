@@ -14,6 +14,7 @@ add_subdirectory(extern/rtmidi)     # midi library
 add_subdirectory(extern/fmt)        # fmt
 add_subdirectory(extern/libsndfile) # sound library
 add_subdirectory(extern/SDL)        # SDL3
+add_subdirectory(extern/ImGuiFileDialog)
 
 # -----------------------------
 # Vulkan (system package)
@@ -36,6 +37,11 @@ add_library(imgui STATIC
 
 target_include_directories(imgui PUBLIC 
     extern/imgui
+    extern/imgui/backends
+)
+
+target_include_directories(ImGuiFileDialog PUBLIC
+    extern/imgui 
     extern/imgui/backends
 )
 

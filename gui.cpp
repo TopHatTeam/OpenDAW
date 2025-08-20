@@ -430,8 +430,60 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
             {
 
             }
+
+            if (ImGui::MenuItem("Import", "Ctrl+S"))
+            {
+
+            }
+            
             ImGui::EndMenu();
         }
+
+        if (ImGui::BeginMenu("Edit"))
+        {
+            if (ImGui::MenuItem("Copy", "Ctrl+C"))
+            {
+
+            }
+
+            if (ImGui::MenuItem("Paste", "Ctrl+V"))
+            {
+
+            }
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("View"))
+        {
+            if (ImGui::MenuItem("Show MIDI", "Alt+M"))
+            {
+
+            }
+
+            if (ImGui::MenuItem("Show Mixer", "Alt+N"))
+            {
+
+            }
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Settings"))
+        {
+            if (ImGui::MenuItem("Audio Settings"))
+            {
+
+            }
+
+            if (ImGui::MenuItem("Artist Settings"))
+            {
+                
+            }
+
+            ImGui::EndMenu();
+        }
+
         ImGui::EndMenuBar();
     }
     
