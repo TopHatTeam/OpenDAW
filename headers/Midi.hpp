@@ -54,8 +54,8 @@ public:
     int         getid() const { return id; }
     RtMidiIn*   GetMidiIn() const { return midiin; }
     RtMidiOut*  GetMidiOut() const { return midiout; }
-    RtMidiIn*   SetMidiIn(RtMidiIn* in) { midiin = in; }
-    RtMidiOut*  SetMidiOut(RtMidiOut* out) { midiout = out; }
+    void        SetMidiIn(RtMidiIn* in) { midiin = in; }        /* must be a void because we're not returning anything*/
+    void        SetMidiOut(RtMidiOut* out) { midiout = out; }   
 
     string portName;
     unsigned int nPorts;

@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
-project(OpenDAW LANGUAGES C CXX OBJCXX)
+if(WIN32)
+    project(OpenDAW LANGUAGES C CXX)
+endif()
+
+if (UNIX AND NOT APPLE)
+    project(OpenDAW LANGUAGES C CXX)
+endif()
+
+if(APPLE)
+    project(OpenDAW LANGUAGES C CXX OBJCXX)
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

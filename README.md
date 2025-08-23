@@ -58,7 +58,7 @@ So rust is not fully off the table
 ### Ubuntu / Debian packages
 
 ```bsh
-sudo apt install build-essential libburn-dev cmake make clang clang++
+sudo apt install build-essential libburn-dev cmake make clang clang++ libvulkan-dev
 ```
 
 Optional installs

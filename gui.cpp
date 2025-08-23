@@ -11,6 +11,7 @@
 //
 // ---------------------------------------------------------
 
+
 #include "headers/gui.hpp"
 
 #if defined(_WIN32) || defined(__linux__)
@@ -458,7 +459,14 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
         {
             if (ImGui::MenuItem("Show MIDI", "Alt+M"))
             {
-
+                if (show_midi != true)
+                {
+                    show_midi = true;
+                }
+                else 
+                {
+                    show_midi = false;
+                }
             }
 
             if (ImGui::MenuItem("Show Mixer", "Alt+N"))
@@ -574,6 +582,11 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
     
     ImGui::End();
 
+    if (show_midi == true)
+    {
+        show_piano_roll();
+    }
+
     ImGui::Render();
 
 
@@ -591,3 +604,84 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
     }
 
 }
+
+void OpenDAW::show_piano_roll()
+{
+    const int number_of_notes = 128;
+    const float note_height = 20.0f;
+    const int number_of_beats = 64;
+    const float beat_width = 40.0f;
+    static float scrolly = 0.0f;
+    static float scrollx = 0.0f;
+
+    ImGui::Begin("Piano Roll", nullptr);
+
+    ImGui::BeginChild("Piano Keys", ImVec2(80, 600), true);
+
+    if (ImGui::IsWindowHovered())
+    {
+        scrolly -= ImGui::GetIO().MouseWheel * 30.0f;
+    }
+
+    for (int i = number_of_notes - 1; i >= 0; i--)
+    {
+        char label[16];
+        sprintf(label, "%d", i);
+
+        bool is_it_a_black_key = (i % 12 == 1 || i % 12 == 3 || i % 12 == 6 || i % 12 == 8 || i % 12 == 10);
+
+        if (is_it_a_black_key)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(40, 40, 40, 255));
+        }
+        else 
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(200, 200, 200, 255));
+        }
+
+        ImGui::Button(label, ImVec2(-1, note_height));
+
+        ImGui::PopStyleColor();
+    }
+    
+    ImGui::EndChild();
+    
+    ImGui::SameLine();
+
+    ImGui::BeginChild("Midi Grid", ImVec2(0, 600), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+    ImDrawList* midi_draw_list = ImGui::GetWindowDrawList();
+
+    ImVec2 origin = ImGui::GetCursorScreenPos();
+
+    if (ImGui::IsWindowHovered())
+    {
+        scrolly -= ImGui::GetIO().MouseWheel * 30.0f;
+        scrollx -= ImGui::GetIO().MouseWheelH * 30.0f;
+    }
+
+    /* Draw the horizontal lines*/
+    for (int i = 0;  i <= number_of_notes; i++)
+    {
+        float y = origin.y + i * note_height - scrolly;
+        midi_draw_list->AddLine(
+            ImVec2(origin.x, y), 
+            ImVec2(origin.x + number_of_beats * beat_width, y),
+            IM_COL32(200, 200, 200, 255)
+        );
+    }
+
+    for (int i = 0; i <= number_of_beats; i++)
+    {
+        float x = origin.x + i * beat_width - scrollx;
+        midi_draw_list->AddLine(
+            ImVec2(x, origin.y),
+            ImVec2(x, origin.y + number_of_notes * note_height),
+            IM_COL32(180, 180, 180, 255)
+        );
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
+}   

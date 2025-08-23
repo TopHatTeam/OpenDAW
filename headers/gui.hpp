@@ -59,6 +59,8 @@ namespace OpenDAW
     static inline float                 timeline_scroll     = 0.0f;
     static inline float                 timeline_scroll_h     = 0.0f;
     static inline float                 pixels_per_seconds  = 100.0f;
+    static inline bool                  show_midi           = false;
+    static inline bool                  show_mixer          = false;
     
     // -- SDL3 variables --
     inline float                   main_scale;
@@ -93,6 +95,8 @@ namespace OpenDAW
      * @returns void
      */
     void render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int width, int height);
+
+    void show_piano_roll();
 }
 
 #endif
