@@ -97,6 +97,8 @@ namespace OpenDAW
     void render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int width, int height);
 
     void show_piano_roll();
+
+    void gui_input();
 }
 
 #endif

@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 
             /* Now here comes the real Graphical user interface*/
             OpenDAW::render_gui(clear_color, tracks, fb_width, fb_height);
-
+            OpenDAW::gui_input();
         }
     }
 

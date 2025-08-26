@@ -270,7 +270,7 @@ typedef enum
     N_UNDEFINED,
 } Note;
 
-const freq_t MusicNote[] =
+const freq_t MusicNoteFreq[] =
 {
     [N_C8]      = nC8,
     [N_B7]      = nB7,
@@ -407,7 +407,7 @@ typedef struct wave_t
 
 typedef struct 
 {
-    
+    Note note;
 } noteinfo_t;
 
 typedef struct audio_clip_t

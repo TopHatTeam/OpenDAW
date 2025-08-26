@@ -616,7 +616,7 @@ void OpenDAW::show_piano_roll()
 
     ImGui::Begin("Piano Roll", nullptr);
 
-    ImGui::BeginChild("Piano Keys", ImVec2(80, 600), true);
+    ImGui::BeginChild("Piano Keys", ImVec2(100, 600), true);
 
     if (ImGui::IsWindowHovered())
     {
@@ -633,13 +633,13 @@ void OpenDAW::show_piano_roll()
         if (is_it_a_black_key)
         {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(40, 40, 40, 255));
+            ImGui::Button(label, ImVec2(-1, note_height));
         }
         else 
         {
             ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(200, 200, 200, 255));
+            ImGui::Button(label, ImVec2(-3, note_height));
         }
-
-        ImGui::Button(label, ImVec2(-1, note_height));
 
         ImGui::PopStyleColor();
     }
@@ -685,3 +685,21 @@ void OpenDAW::show_piano_roll()
 
     ImGui::End();
 }   
+
+void OpenDAW::gui_input()
+{
+    /* The reason we check if alt is held down and not check if m is held down; is because
+        MAJOR LOGIC ERROR if you do so. Every frame 
+    */
+    if (ImGui::IsKeyDown(ImGuiMod_Alt) && ImGui::IsKeyPressed(ImGuiKey_M))
+    {
+        if (show_midi != true)
+        {
+            show_midi = true;
+        }
+        else 
+        {
+            show_midi = false;
+        }
+    }
+}
