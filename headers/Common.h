@@ -119,7 +119,11 @@ typedef __builtin_va_list va_list;
 
 #endif
 
+typedef unsigned long size_t;
+
 static int skip_atoi(const char** s);
+
+size_t strnlen(const char* s, size_t count );
 
 static char* number(char* string, long number, int base, int size, int precision, int type);
 

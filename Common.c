@@ -58,13 +58,21 @@ float csinf(float x)
 static int skip_atoi(const char** s)
 {
     int i = 0; 
-
     while (isdigit(**s))
     {
         i = i * 10 + *((*s)++) - '0';
     }
 
     return i;
+}
+
+size_t strnlen(const char* s, size_t count)
+{
+    const char* sc;
+
+    for (sc = s; count-- && *sc != '\0'; ++sc)
+    
+    return sc - s;
 }
 
 static char* number(char* string, long number, int base, int size, int precision, int type)
@@ -218,7 +226,7 @@ static char* number(char* string, long number, int base, int size, int precision
 int vsprintf(char* buffer, const char* fmt, va_list args)
 {
     int length;
-    unsigned long number;
+    unsigned long num;
     int i, base;
     char* string;
     const char* s;
@@ -407,22 +415,22 @@ int vsprintf(char* buffer, const char* fmt, va_list args)
 
         if (qualifier == 'l')
         {
-            number = va_arg(args, unsigned long);
+            num = va_arg(args, unsigned long);
         }
         else if (qualifier == 'h')
         {
-            number = (unsigned short)va_arg(args, int);
+            num = (unsigned short)va_arg(args, int);
             if (flags & SIGN)
             {
                 /* Casting a int to a short*/
-                number = (short)number;
+                num = (short)num;
             }
         }
         else 
         {
-            number = va_arg(args, unsigned int);
+            num = va_arg(args, unsigned int);
         }
-        string = number(string, number, base, field_width, precision, flags);
+        string = number(string, num, base, field_width, precision, flags);
     }
     *string = '\0';
     return string - buffer;
