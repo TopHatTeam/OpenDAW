@@ -11,8 +11,8 @@
 //
 // ---------------------------------------------------------
 
-#ifndef MIDI_H
-#define MIDI_H
+#ifndef MIDI_HPP
+#define MIDI_HPP
 
 #include <fmt/std.h>
 #include <string>

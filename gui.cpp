@@ -13,6 +13,7 @@
 
 
 #include "headers/gui.hpp"
+#include "headers/projectfile.h"
 
 #if defined(_WIN32) || defined(__linux__)
 
@@ -430,6 +431,12 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
             if (ImGui::MenuItem("Save Project", "Ctrl+S"))
             {
 
+                IGFD::FileDialogConfig subatomic_bit_config;
+                subatomic_bit_config.path       = ".";              /*Starting folder*/
+                subatomic_bit_config.fileName   = "untitled.dpf";   /*Default filename*/
+                subatomic_bit_config.flags      = ImGuiFileDialogFlags_ConfirmOverwrite;
+
+                ImGuiFileDialog::Instance()->OpenDialog("sprojectkey", "Save Project", ".dpf", subatomic_bit_config);
             }
 
             if (ImGui::MenuItem("Import", "Ctrl+S"))
@@ -437,6 +444,14 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
 
             }
             
+            if (ImGui::MenuItem("Exit", "Alt+F4"))
+            {
+                if (quit_app != true)
+                {
+                    quit_app = true;
+                }
+            }
+
             ImGui::EndMenu();
         }
 
@@ -493,6 +508,16 @@ void OpenDAW::render_gui(ImVec4 clearcolor, vector<audio_track_t>& tracks, int w
         }
 
         ImGui::EndMenuBar();
+    }
+
+    if (ImGuiFileDialog::Instance()->Display("sprojectkey"))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string filepath = ImGuiFileDialog::Instance()->GetFilePathName();
+            create_project_file(filepath.c_str());
+        }
+        ImGuiFileDialog::Instance()->Close();
     }
     
     /* The timeline track's horizontal zoom and scoll*/
@@ -701,5 +726,23 @@ void OpenDAW::gui_input()
         {
             show_midi = false;
         }
+    }
+
+    if (ImGui::IsKeyDown(ImGuiMod_Alt) && ImGui::IsKeyPressed(ImGuiKey_F4))
+    {
+        if (quit_app != true)
+        {
+            quit_app = true;
+        }
+    }
+
+    if (ImGui::IsKeyDown(ImGuiMod_Ctrl) && ImGui::IsKeyPressed(ImGuiKey_S))
+    {
+        IGFD::FileDialogConfig subatomic_bit_config;
+        subatomic_bit_config.path       = ".";              /*Starting folder*/
+        subatomic_bit_config.fileName   = "untitled.dpf";   /*Default filename*/
+        subatomic_bit_config.flags      = ImGuiFileDialogFlags_ConfirmOverwrite;
+
+        ImGuiFileDialog::Instance()->OpenDialog("sprojectkey", "Save Project", ".dpf", subatomic_bit_config);
     }
 }

@@ -22,6 +22,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_vulkan.h"
+#include "ImGuiFileDialog.h"
 #include "AudioCore.h"
 
 /* by the way if building this gives you multiple declaring of any of these things defined in the namespace
@@ -61,6 +62,8 @@ namespace OpenDAW
     static inline float                 pixels_per_seconds  = 100.0f;
     static inline bool                  show_midi           = false;
     static inline bool                  show_mixer          = false;
+    static inline bool                  quit_app            = false;
+
     
     // -- SDL3 variables --
     inline float                   main_scale;

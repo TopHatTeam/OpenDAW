@@ -90,6 +90,11 @@ int main(int argc, char *argv[])
                 running = false;
             }
 
+            if (OpenDAW::quit_app != false)
+            {
+                running = false;
+            }
+
             int fb_width;
             int fb_height;
             SDL_GetWindowSize(OpenDAW::window, &fb_width, &fb_height);

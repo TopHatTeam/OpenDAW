@@ -51,6 +51,7 @@ target_include_directories(imgui PUBLIC
 )
 
 target_include_directories(ImGuiFileDialog PUBLIC
+    extern/ImGuiFileDialog
     extern/imgui 
     extern/imgui/backends
 )
@@ -79,6 +80,7 @@ if(WIN32)
         Common.c
         gui.cpp
         vst.c   # VST support
+        projectfile.c
     )
 endif()
 
@@ -91,6 +93,7 @@ if(UNIX AND NOT APPLE)
         Common.c
         gui.cpp
         vst.c   # VST support
+        projectfile.c
     )
 endif()
 
@@ -104,6 +107,7 @@ if(APPLE)
         Common.c
         gui.cpp
         vst.c   # VST support
+        projectfile.c
     )
 endif()
 
@@ -124,6 +128,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     SDL3::SDL3
     Vulkan::Vulkan
     imgui
+    ImGuiFileDialog
 )
 
 # -----------------------------
