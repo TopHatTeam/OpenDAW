@@ -16,7 +16,9 @@ Currently it supports
 
 ~~Unlikely I don't own a Mac... Apple doesn't give SDKs out for people like me.~~
 
-I found a way to make MacOS support and that involves using a virtual machine to get the SDKs.. "**shhh** don't tell Tim Cook"
+~~I found a way to make MacOS support and that involves using a virtual machine to get the SDKs.. "**shhh** don't tell Tim Cook"~~
+
+I gave in and bought a Mac...
 
 ### Why use a BSD Clause 3 license?
 
