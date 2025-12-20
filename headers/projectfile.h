@@ -1,10 +1,10 @@
 // ---------------------------------------------------------
 //
+//  OpenDAW
+//
 //  Andrew Conner Skatzes (C) 2025
 //
 //  BSD-3 Clause license
-//  Created by Andrew Skatzes on 8/19/25.
-//  projectfile.hpp
 //
 //  Description:
 //      the project file header structure

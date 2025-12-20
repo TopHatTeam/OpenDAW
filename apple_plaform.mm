@@ -1,10 +1,10 @@
 // ---------------------------------------------------------
 //
+//  OpenDAW
+//
 //  Andrew Conner Skatzes (C) 2025
 //
 //  BSD-3 Clause license
-//  Created by Andrew Skatzes on 8/18/25.
-//  apple_platform.mm
 //
 //  Description:
 //      Apple platform specific stuff

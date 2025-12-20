@@ -23,7 +23,7 @@ I gave in and bought a Mac...
 ### Why use a BSD Clause 3 license?
 
 This is suppose to be a blueprint for DAW developers. They can use this code freely without publicizing their work. This can be used for educational purposes, etc.
-Also don't use my name to promote your custom DAW. That's jus not cool
+Also don't use my name to promote your custom DAW. That's just not cool
 
 ### What are the features?
 
