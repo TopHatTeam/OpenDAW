@@ -13,13 +13,13 @@
 
 #include "cstdio.h"
 
-int print(const char* RESTRICT msg, ...)
+int print(const char* RESTRICT fmt, ...)
 {
     int result;
     va_list args;
 
-    va_start(args, msg);
-    result = vprintf(msg, args);
+    va_start(args, fmt);
+    result = vfprintf(stdout, fmt, args);
     va_end(args);
 
     return (result);

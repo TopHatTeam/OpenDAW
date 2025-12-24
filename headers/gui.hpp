@@ -37,7 +37,7 @@ struct audio_track_t
     vector<audio_clip_t> clip;
 };
 
-namespace OpenDAW 
+namespace OpenDAW::GUI 
 {
     inline VkAllocationCallbacks*   o_allocator         = nullptr;
     inline VkInstance               o_instance          = VK_NULL_HANDLE;

@@ -35,7 +35,7 @@ extern "C" {
 #define RESTRICT
 #endif
 
-int print(const char* RESTRICT msg, ...);
+int print(const char* RESTRICT fmt, ...);
 
 #ifdef __cplusplus
 }
